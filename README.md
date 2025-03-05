@@ -2,7 +2,7 @@
 
 [en desarrollo]
 
-# 2. Enterovirus Mutation Analysis Pipeline
+# 2. Enterovirus Mutation Analysis Pipeline (mutations-nf/main.nf)
 
 This pipeline analyzes mutations in enterovirus sequences, offering two modes of analysis: consensus sequence and viral population.
 
