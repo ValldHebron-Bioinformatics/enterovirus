@@ -20,18 +20,6 @@ Ensure that the following programs/packages are installed on your system before 
 
 Ensure that the paths in the nextflow.config are pointing the correct folder.
 
-## Uso
-
-Para utilizar los datasets de prueba, se debe crear un directorio donde se guardarán los outputs. Este directorio de destino debe escribirse (full path) en el archivo nextflow.config, en la linea de params.workdir
-
-Para ejecutar el test de uso de multifasta, ejecutar la línea de código:
-
-```
-nextflow run enterovirus-genotyping.nf --input fasta --user /fullPath/test/demo-user --fastaFile /fullPath/test/demo-user/multifasta.fasta
-```
-
-Si en lugar de adjuntar un archivo se copian las secuencias en la web, se deberán guardar en un archivo, que será el input para el parámetro `--fastaFile`
-
 ## Execution Overview
 
 The execution of the scripts varies depending on the user's input. There are two main options:
@@ -119,3 +107,26 @@ Based on [RIVM Enterovirus Typing Tool](https://www.rivm.nl/mpf/typingtool/enter
 | 10196548_2 | Enterovirus betacoxsackie | EV-B84 | ![EV-B84 Example](images/EV-B84_example.png) |
 | sample1 | Enterovirus deconjuncti | EV-D68 (B3) | ![EV-D68 Example](images/EV-D68_example.png) |
 
+## Demo dataset
+
+There are four possibilities of usage:
+
+1. FASTQs (whole genome), without primers
+
+This test should be executed by filling in the `samples-list.csv` file with the following information (without headers!):
+
+| Sample ID  | FASTQ1 Name | FASTQ2 Name |
+|------------|------------|------------|
+| 564101677204   | 564101677204_S22_L001_R1_001.fastq.gz | 564101677204_S22_L001_R2_001.fastq.gz |
+| 564100922910    | 564100922910_S54_L001_R1_001.fastq.gz | 564100922910_S54_L001_R2_001.fastq.gz |
+| 648101862477    | 648101862477_S2_L001_R1_001.fastq.gz | 648101862477_S2_L001_R2_001.fastq.gz |
+
+Para utilizar los datasets de prueba, se debe crear un directorio donde se guardarán los outputs. Este directorio de destino debe escribirse (full path) en el archivo nextflow.config, en la linea de params.workdir
+
+Para ejecutar el test de uso de multifasta, ejecutar la línea de código:
+
+```
+nextflow run enterovirus-genotyping.nf --input fasta --user /fullPath/test/demo-user --fastaFile /fullPath/test/demo-user/multifasta.fasta
+```
+
+Si en lugar de adjuntar un archivo se copian las secuencias en la web, se deberán guardar en un archivo, que será el input para el parámetro `--fastaFile`
