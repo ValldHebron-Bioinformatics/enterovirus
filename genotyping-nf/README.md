@@ -115,7 +115,7 @@ Based on [RIVM Enterovirus Typing Tool](https://www.rivm.nl/mpf/typingtool/enter
 
 | Name | Species | Genotype | Genome |
 |------|--------|---------|--------|
-| 10196548_1 | Enterovirus betacoxsackie | E-18 |  |
-| 10196548_2 | Enterovirus betacoxsackie | EV-B84 | - |
-| sample1 | Enterovirus deconjuncti | EV-D68 (B3) | - |
+| 10196548_1 | Enterovirus betacoxsackie | E-18 | ![E-18 Example](images/E-18_example.png) |
+| 10196548_2 | Enterovirus betacoxsackie | EV-B84 | ![EV-B84 Example](images/EV-B84_example.png) |
+| sample1 | Enterovirus deconjuncti | EV-D68 (B3) | ![EV-D68 Example](images/EV-D68_example.png) |
 
