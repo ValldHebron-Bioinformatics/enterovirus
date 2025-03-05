@@ -1,4 +1,4 @@
-# Enterovirus repository
+# Enterovirus genotyping
 
 ## Prerrequisitos
 
