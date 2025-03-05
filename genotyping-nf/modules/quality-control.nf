@@ -16,14 +16,14 @@ process CREATEDIR {
     script:
     """
     #!/bin/bash
-    mkdir $params.workdir/samples/$sample; DIR_SAMPLE=$params.workdir/samples/$sample
+    mkdir $params.samplesDir/$sample; DIR_SAMPLE=$params.samplesDir/$sample
     mkdir "\$DIR_SAMPLE"/qc "\$DIR_SAMPLE"/assembly "\$DIR_SAMPLE"/fastq "\$DIR_SAMPLE"/mutations "\$DIR_SAMPLE"/variant_calling "\$DIR_SAMPLE"/results
     """    
 }
 
 process GETFASTQS { 
     /**
-    Get fastqs from tmp
+    Get fastqs
     */
     
     input:
@@ -35,8 +35,8 @@ process GETFASTQS {
     script:
     """
     #!/bin/bash
-    cp $params.workdir/tmp/$fastq1 $dirSample/fastq/$fastq1
-    cp $params.workdir/tmp/$fastq2 $dirSample/fastq/$fastq2
+    cp $params.rawfastqDir/$fastq1 $dirSample/fastq/$fastq1
+    cp $params.rawfastqDir/$fastq2 $dirSample/fastq/$fastq2
     FASTQ1=$dirSample/fastq/$fastq1; FASTQ2=$dirSample/fastq/$fastq2
     """
 }
