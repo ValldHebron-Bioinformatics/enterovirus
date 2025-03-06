@@ -1,9 +1,0 @@
-SampleID;Protein;Mutation_type;Aa_change;Amino_Acid_Property_Change;Nt_mutation;Mutation_frequency;Mutation_depth
-Sample1;AY426531_EVD68;SYNONYMOUS;V183V;Amino acid did not change, it stayed Hydrophobic;G549A;1;57
-Sample1;AY426531_EVD68;NON_SYNONYMOUS;I187V;Amino acid did not change, it stayed Hydrophobic;A559G;1;85
-Sample1;AY426531_EVD68;SYNONYMOUS;D189D;Amino acid did not change, it stayed Positively charged;T567C;1;94
-Sample1;AY426531_EVD68;SYNONYMOUS;A192A;Amino acid did not change, it stayed Hydrophobic;T576C;1;119
-Sample1;AY426531_EVD68;SYNONYMOUS;Y205Y;Amino acid did not change, it stayed Aromatic Hydrophobic;T615C;1;137
-Sample1;AY426531_EVD68;SYNONYMOUS;F208F;Amino acid did not change, it stayed Aromatic Hydrophobic;T624C;1;122
-Sample1;AY426531_EVD68;SYNONYMOUS;G211G;Amino acid did not change, it stayed Special case;C633T;1;82
-Sample1;AY426531_EVD68;SYNONYMOUS;K217K;Amino acid did not change, it stayed Positively charged;A651G;1;58
