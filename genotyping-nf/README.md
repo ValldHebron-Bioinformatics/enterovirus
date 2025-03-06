@@ -14,7 +14,7 @@ Ensure that the following programs/packages are installed on your system before 
 - Trimmomatic v0.39
 - bowtie2 v2.5.1
 - bbduk.sh (https://sourceforge.net/projects/bbmap/)
-- SPAdes v3.13.1
+- SPAdes v4.1.0
 - blastn v2.14.0+
 - diamond v2.1.10.164
 - seqkit v2.5.1
