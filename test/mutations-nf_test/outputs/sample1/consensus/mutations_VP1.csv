@@ -1,0 +1,140 @@
+SampleID;Protein;Mutation_type;Aa_change;Amino_Acid_Property_Change;Nt_mutation
+Sample1;VP1;NON_SYNONYMOUS;S1-;Deletion;T1-,C2-,A3-
+Sample1;VP1;NON_SYNONYMOUS;N2-;Deletion;A4-,A5-,C6-
+Sample1;VP1;NON_SYNONYMOUS;H3-;Deletion;C7-,A8-,C9-
+Sample1;VP1;NON_SYNONYMOUS;L4-;Deletion;T10-,T11-,A12-
+Sample1;VP1;NON_SYNONYMOUS;Framsehift5;Frameshift;C13-
+Sample1;VP1;NON_SYNONYMOUS;G6E;Amino acid changed from Special case to Positively charged;G17A,A18G
+Sample1;VP1;SYNONYMOUS;A10A;Amino acid did not change, it stayed Hydrophobic;C30T
+Sample1;VP1;NON_SYNONYMOUS;V13I;Amino acid changed from Hydrophobic to Hydrophobic;G37A,G39T
+Sample1;VP1;SYNONYMOUS;E14E;Amino acid did not change, it stayed Positively charged;G42A
+Sample1;VP1;SYNONYMOUS;S15S;Amino acid did not change, it stayed Polar non charged;T45C
+Sample1;VP1;SYNONYMOUS;I16I;Amino acid did not change, it stayed Hydrophobic;C48T
+Sample1;VP1;SYNONYMOUS;K18K;Amino acid did not change, it stayed Positively charged;A54G
+Sample1;VP1;SYNONYMOUS;T21T;Amino acid did not change, it stayed Polar non charged;T63C
+Sample1;VP1;SYNONYMOUS;D22D;Amino acid did not change, it stayed Positively charged;T66C
+Sample1;VP1;SYNONYMOUS;K25K;Amino acid did not change, it stayed Positively charged;G75A
+Sample1;VP1;SYNONYMOUS;E27E;Amino acid did not change, it stayed Positively charged;G81A
+Sample1;VP1;SYNONYMOUS;A30A;Amino acid did not change, it stayed Hydrophobic;C90T
+Sample1;VP1;SYNONYMOUS;E31E;Amino acid did not change, it stayed Positively charged;A93G
+Sample1;VP1;SYNONYMOUS;G33G;Amino acid did not change, it stayed Special case;T99C
+Sample1;VP1;SYNONYMOUS;L38L;Amino acid did not change, it stayed Hydrophobic;C112T,A114G
+Sample1;VP1;SYNONYMOUS;T43T;Amino acid did not change, it stayed Polar non charged;T129A
+Sample1;VP1;NON_SYNONYMOUS;T46S;Amino acid changed from Polar non charged to Polar non charged;C137G
+Sample1;VP1;SYNONYMOUS;E52E;Amino acid did not change, it stayed Positively charged;A156G
+Sample1;VP1;SYNONYMOUS;T59T;Amino acid did not change, it stayed Polar non charged;A177G
+Sample1;VP1;SYNONYMOUS;V60V;Amino acid did not change, it stayed Hydrophobic;A180G
+Sample1;VP1;SYNONYMOUS;S67S;Amino acid did not change, it stayed Polar non charged;G201T
+Sample1;VP1;SYNONYMOUS;E68E;Amino acid did not change, it stayed Positively charged;G204A
+Sample1;VP1;SYNONYMOUS;T69T;Amino acid did not change, it stayed Polar non charged;G207A
+Sample1;VP1;SYNONYMOUS;L75L;Amino acid did not change, it stayed Hydrophobic;T225C
+Sample1;VP1;NON_SYNONYMOUS;G76S;Amino acid changed from Special case to Polar non charged;G226A,T228C
+Sample1;VP1;SYNONYMOUS;L80L;Amino acid did not change, it stayed Hydrophobic;C238T
+Sample1;VP1;SYNONYMOUS;V81V;Amino acid did not change, it stayed Hydrophobic;G243A
+Sample1;VP1;NON_SYNONYMOUS;K84R;Amino acid changed from Positively charged to Positively charged;A251G
+Sample1;VP1;SYNONYMOUS;K89K;Amino acid did not change, it stayed Positively charged;G267A
+Sample1;VP1;SYNONYMOUS;H91H;Amino acid did not change, it stayed Positively charged;T273C
+Sample1;VP1;NON_SYNONYMOUS;A92T;Amino acid changed from Hydrophobic to Polar non charged;G274A
+Sample1;VP1;SYNONYMOUS;S94S;Amino acid did not change, it stayed Polar non charged;C282T
+Sample1;VP1;NON_SYNONYMOUS;S95G;Amino acid changed from Polar non charged to Special case;A283G,C285A
+Sample1;VP1;NON_SYNONYMOUS;A96E;Amino acid changed from Hydrophobic to Positively charged;C287A
+Sample1;VP1;NON_SYNONYMOUS;G97R;Amino acid changed from Special case to Positively charged;G289C,G291A
+Sample1;VP1;NON_SYNONYMOUS;T98I;Amino acid changed from Polar non charged to Hydrophobic;C293T
+Sample1;VP1;NON_SYNONYMOUS;H99D;Amino acid changed from Positively charged to Positively charged;C295G
+Sample1;VP1;SYNONYMOUS;K100K;Amino acid did not change, it stayed Positively charged;A300G
+Sample1;VP1;NON_SYNONYMOUS;F103Y;Amino acid changed from Aromatic Hydrophobic to Aromatic Hydrophobic;T308A,T309C
+Sample1;VP1;SYNONYMOUS;T106T;Amino acid did not change, it stayed Polar non charged;A318G
+Sample1;VP1;SYNONYMOUS;N108N;Amino acid did not change, it stayed Polar non charged;T324C
+Sample1;VP1;SYNONYMOUS;T109T;Amino acid did not change, it stayed Polar non charged;T327C
+Sample1;VP1;SYNONYMOUS;S111S;Amino acid did not change, it stayed Polar non charged;T333C
+Sample1;VP1;SYNONYMOUS;L115L;Amino acid did not change, it stayed Hydrophobic;A345G
+Sample1;VP1;SYNONYMOUS;R116R;Amino acid did not change, it stayed Positively charged;A348G
+Sample1;VP1;SYNONYMOUS;L121L;Amino acid did not change, it stayed Hydrophobic;T361C,A363G
+Sample1;VP1;SYNONYMOUS;T123T;Amino acid did not change, it stayed Polar non charged;A369G
+Sample1;VP1;SYNONYMOUS;L125L;Amino acid did not change, it stayed Hydrophobic;T375C
+Sample1;VP1;SYNONYMOUS;R126R;Amino acid did not change, it stayed Positively charged;G378A
+Sample1;VP1;SYNONYMOUS;V139V;Amino acid did not change, it stayed Hydrophobic;A417G
+Sample1;VP1;NON_SYNONYMOUS;N140G;Amino acid changed from Polar non charged to Special case;A418G,A419G
+Sample1;VP1;SYNONYMOUS;G141G;Amino acid did not change, it stayed Special case;T423C
+Sample1;VP1;NON_SYNONYMOUS;N142D;Amino acid changed from Polar non charged to Positively charged;A424G,T426C
+Sample1;VP1;NON_SYNONYMOUS;Framsehift143;Frameshift;A428-,T429-
+Sample1;VP1;NON_SYNONYMOUS;Framsehift144;Frameshift;G430-
+Sample1;VP1;NON_SYNONYMOUS;S145N;Amino acid changed from Polar non charged to Polar non charged;G434A,C435T
+Sample1;VP1;SYNONYMOUS;G149G;Amino acid did not change, it stayed Special case;T447C
+Sample1;VP1;SYNONYMOUS;L150L;Amino acid did not change, it stayed Hydrophobic;C450T
+Sample1;VP1;SYNONYMOUS;D152D;Amino acid did not change, it stayed Positively charged;C456T
+Sample1;VP1;SYNONYMOUS;L155L;Amino acid did not change, it stayed Hydrophobic;C465T
+Sample1;VP1;SYNONYMOUS;P161P;Amino acid did not change, it stayed Special case;A483T
+Sample1;VP1;SYNONYMOUS;A164A;Amino acid did not change, it stayed Hydrophobic;T492C
+Sample1;VP1;SYNONYMOUS;T166T;Amino acid did not change, it stayed Polar non charged;T498C
+Sample1;VP1;NON_SYNONYMOUS;K168E;Amino acid changed from Positively charged to Positively charged;A502G
+Sample1;VP1;NON_SYNONYMOUS;E169K;Amino acid changed from Positively charged to Positively charged;G505A,G507A
+Sample1;VP1;SYNONYMOUS;Q170Q;Amino acid did not change, it stayed Polar non charged;G510A
+Sample1;VP1;SYNONYMOUS;F173F;Amino acid did not change, it stayed Aromatic Hydrophobic;T519C
+Sample1;VP1;SYNONYMOUS;Q176Q;Amino acid did not change, it stayed Polar non charged;A528G
+Sample1;VP1;SYNONYMOUS;S177S;Amino acid did not change, it stayed Polar non charged;A531T
+Sample1;VP1;SYNONYMOUS;G178G;Amino acid did not change, it stayed Special case;C534T
+Sample1;VP1;SYNONYMOUS;S179S;Amino acid did not change, it stayed Polar non charged;T537C
+Sample1;VP1;SYNONYMOUS;V183V;Amino acid did not change, it stayed Hydrophobic;G549A
+Sample1;VP1;SYNONYMOUS;F185F;Amino acid did not change, it stayed Aromatic Hydrophobic;T555C
+Sample1;VP1;NON_SYNONYMOUS;I187V;Amino acid changed from Hydrophobic to Hydrophobic;A559G
+Sample1;VP1;SYNONYMOUS;D189D;Amino acid did not change, it stayed Positively charged;T567C
+Sample1;VP1;SYNONYMOUS;F198F;Amino acid did not change, it stayed Aromatic Hydrophobic;T594C
+Sample1;VP1;SYNONYMOUS;F208F;Amino acid did not change, it stayed Aromatic Hydrophobic;T624C
+Sample1;VP1;SYNONYMOUS;D210D;Amino acid did not change, it stayed Positively charged;T630C
+Sample1;VP1;SYNONYMOUS;G211G;Amino acid did not change, it stayed Special case;C633T
+Sample1;VP1;SYNONYMOUS;E216E;Amino acid did not change, it stayed Positively charged;G648A
+Sample1;VP1;SYNONYMOUS;K217K;Amino acid did not change, it stayed Positively charged;A651G
+Sample1;VP1;SYNONYMOUS;L220L;Amino acid did not change, it stayed Hydrophobic;A660T
+Sample1;VP1;SYNONYMOUS;Y221Y;Amino acid did not change, it stayed Aromatic Hydrophobic;T663C
+Sample1;VP1;SYNONYMOUS;G222G;Amino acid did not change, it stayed Special case;A666G
+Sample1;VP1;SYNONYMOUS;N224N;Amino acid did not change, it stayed Polar non charged;C672T
+Sample1;VP1;SYNONYMOUS;D227D;Amino acid did not change, it stayed Positively charged;C681T
+Sample1;VP1;SYNONYMOUS;T228T;Amino acid did not change, it stayed Polar non charged;T684C
+Sample1;VP1;SYNONYMOUS;N231N;Amino acid did not change, it stayed Polar non charged;C693T
+Sample1;VP1;SYNONYMOUS;L232L;Amino acid did not change, it stayed Hydrophobic;G696A
+Sample1;VP1;SYNONYMOUS;V237V;Amino acid did not change, it stayed Hydrophobic;G711A
+Sample1;VP1;SYNONYMOUS;E239E;Amino acid did not change, it stayed Positively charged;A717G
+Sample1;VP1;SYNONYMOUS;H240H;Amino acid did not change, it stayed Positively charged;T720C
+Sample1;VP1;SYNONYMOUS;Q241Q;Amino acid did not change, it stayed Polar non charged;A723G
+Sample1;VP1;NON_SYNONYMOUS;V243I;Amino acid changed from Hydrophobic to Hydrophobic;G727A
+Sample1;VP1;SYNONYMOUS;F245F;Amino acid did not change, it stayed Aromatic Hydrophobic;T735C
+Sample1;VP1;SYNONYMOUS;V247V;Amino acid did not change, it stayed Hydrophobic;G741A
+Sample1;VP1;SYNONYMOUS;V249V;Amino acid did not change, it stayed Hydrophobic;T747C
+Sample1;VP1;SYNONYMOUS;A260A;Amino acid did not change, it stayed Hydrophobic;A780G
+Sample1;VP1;SYNONYMOUS;A262A;Amino acid did not change, it stayed Hydrophobic;T786A
+Sample1;VP1;SYNONYMOUS;P263P;Amino acid did not change, it stayed Special case;A789G
+Sample1;VP1;SYNONYMOUS;P266P;Amino acid did not change, it stayed Special case;G798A
+Sample1;VP1;NON_SYNONYMOUS;M269L;Amino acid changed from Hydrophobic to Hydrophobic;A805C
+Sample1;VP1;SYNONYMOUS;Y271Y;Amino acid did not change, it stayed Aromatic Hydrophobic;C813T
+Sample1;VP1;SYNONYMOUS;A275A;Amino acid did not change, it stayed Hydrophobic;T825A
+Sample1;VP1;SYNONYMOUS;G281G;Amino acid did not change, it stayed Special case;T843C
+Sample1;VP1;NON_SYNONYMOUS;R282K;Amino acid changed from Positively charged to Positively charged;G845A
+Sample1;VP1;NON_SYNONYMOUS;D283E;Amino acid changed from Positively charged to Positively charged;T849A
+Sample1;VP1;NON_SYNONYMOUS;T284R;Amino acid changed from Polar non charged to Positively charged;C851G
+Sample1;VP1;SYNONYMOUS;N287N;Amino acid did not change, it stayed Polar non charged;C861T
+Sample1;VP1;NON_SYNONYMOUS;T288A;Amino acid changed from Polar non charged to Hydrophobic;A862G,A864G
+Sample1;VP1;SYNONYMOUS;L289L;Amino acid did not change, it stayed Hydrophobic;T867C
+Sample1;VP1;SYNONYMOUS;N290N;Amino acid did not change, it stayed Polar non charged;T870C
+Sample1;VP1;SYNONYMOUS;G294G;Amino acid did not change, it stayed Special case;T882C
+Sample1;VP1;NON_SYNONYMOUS;A297E;Amino acid changed from Hydrophobic to Positively charged;C890A
+Sample1;VP1;NON_SYNONYMOUS;V299I;Amino acid changed from Hydrophobic to Hydrophobic;G895A
+Sample1;VP1;NON_SYNONYMOUS;T300K;Amino acid changed from Polar non charged to Positively charged;C899A
+Sample1;VP1;SYNONYMOUS;T301T;Amino acid did not change, it stayed Polar non charged;T903C
+Sample1;VP1;SYNONYMOUS;H304H;Amino acid did not change, it stayed Positively charged;C912T
+Sample1;VP1;NON_SYNONYMOUS;N305D;Amino acid changed from Polar non charged to Positively charged;A913G
+Sample1;VP1;NON_SYNONYMOUS;-306I;Insertion;-917T,-918C
+Sample1;VP1;NON_SYNONYMOUS;-307R;Insertion;-919C,-920G,-921G
+Sample1;VP1;NON_SYNONYMOUS;-308L;Insertion;-922T
+Sample1;VP1;SYNONYMOUS;V309V;Amino acid did not change, it stayed Hydrophobic;A927G
+Sample1;VP1;NON_SYNONYMOUS;T310N;Amino acid changed from Polar non charged to Polar non charged;C929A,C930T
+Sample1;VP1;SYNONYMOUS;T311T;Amino acid did not change, it stayed Polar non charged;C933T
+Sample1;VP1;NON_SYNONYMOUS;-312G;Insertion;-935G,-936T
+Sample1;VP1;NON_SYNONYMOUS;-313P;Insertion;-937C,-938C,-939A
+Sample1;VP1;NON_SYNONYMOUS;-314G;Insertion;-940G,-941G,-942C
+Sample1;VP1;NON_SYNONYMOUS;-315F;Insertion;-943T,-944T,-945C
+Sample1;VP1;NON_SYNONYMOUS;-316G;Insertion;-946G,-947G,-948A
+Sample1;VP1;NON_SYNONYMOUS;-317G;Insertion;-949G,-950G,-951G
+Sample1;VP1;NON_SYNONYMOUS;-318V;Insertion;-952G,-953T,-954C
+Sample1;VP1;NON_SYNONYMOUS;-319F;Insertion;-955T,-956T,-957T
+Sample1;VP1;NON_SYNONYMOUS;-320V;Insertion;-958G,-959T,-960A
