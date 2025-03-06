@@ -2,9 +2,39 @@
 
 [en desarrollo]
 
-# 2. Enterovirus Mutation Analysis Pipeline (mutations-nf/main.nf)
+# 2. Enterovirus Mutation Analysis Pipeline
 
 This pipeline analyzes mutations in enterovirus sequences, offering two modes of analysis: consensus sequence and viral population.
+
+## Prerequisites
+
+Ensure that the following programs/packages are installed on your system before running the pipeline:
+
+- nextflow v24.04.3
+- mafft v7.520
+- seqtk v1.4-r122
+- libgcc-ng >= v12
+- trimmomatic v0.39
+- minimap2 v2.26
+- lofreq v2.1.5
+- bcftools >= v1.17
+- samtools >= v1.17
+- minMutFinder >= v1
+- python3 & modules:
+    - sys
+    - re
+    - os
+    - SeqIO from Bio
+    - csv 
+    - pandas
+    - gzip
+    - shutil
+    - matplotlib
+    - seaborn
+    - plotly
+    - numpy
+
+Ensure that the paths in the nextflow.config are pointing the correct folder.
 
 ## Input
 
