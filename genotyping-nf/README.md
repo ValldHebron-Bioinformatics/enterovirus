@@ -1,4 +1,4 @@
-# Enterovirus genotyping
+# Enterovirus Genotyping Pipeline
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ Ensure that the following programs/packages are installed on your system before 
     - pandas
 - Trimmomatic v0.39
 - bowtie2 v2.5.1
-- bbduk.sh (https://github.com/BioInfoTools/BBMap/tree/master)
+- bbduk.sh (https://sourceforge.net/projects/bbmap/)
 - SPAdes v3.13.1
 - blastn v2.14.0+
 - diamond v2.1.10.164
