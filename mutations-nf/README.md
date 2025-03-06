@@ -15,6 +15,7 @@ Ensure that the following programs/packages are installed on your system before 
 - lofreq v2.1.5
 - bcftools >= v1.17
 - samtools >= v1.17
+- minMutFinder >= v1
 - python3 & modules:
     - sys
     - re
