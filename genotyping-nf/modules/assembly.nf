@@ -24,7 +24,7 @@ process SPADES {
         elif [ -f ${dirSample}/assembly/spades/contigs.fasta ]; then
             seqsFasta=${dirSample}/assembly/spades/contigs.fasta
         else
-            echo "No spades contigs or scaffold files found." >> ${dirSample}/errors.log
+            echo "No SPAdes contigs or scaffolds assembled." >> ${dirSample}/errors.log
             exit 1
         fi
         dirFASTA=${dirSample}/assembly
