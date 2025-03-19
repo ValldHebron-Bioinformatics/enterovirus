@@ -2,11 +2,12 @@
     
 nextflow.enable.dsl = 2
 
-
 process SPADES {
     /**
     Ensamblado de novo con SPAdes
     */
+    errorStrategy 'ignore'
+
     input:
     tuple val(sample), val(fastq1), val(fastq2), val(dirSample)
 
@@ -23,7 +24,8 @@ process SPADES {
         elif [ -f ${dirSample}/assembly/spades/contigs.fasta ]; then
             seqsFasta=${dirSample}/assembly/spades/contigs.fasta
         else
-            echo "No spades contigs or scaffold files found." > ${dirSample}/assembly/spades/blastn.log
+            echo "No spades contigs or scaffold files found." >> ${dirSample}/errors.log
+            exit 1
         fi
         dirFASTA=${dirSample}/assembly
         """
@@ -36,8 +38,10 @@ process SPADES {
         elif [ -f ${dirSample}/assembly/spades/contigs.fasta ]; then
             seqsFasta=${dirSample}/assembly/spades/contigs.fasta
         else
-            echo "No spades contigs or scaffold files found." > ${dirSample}/assembly/spades/blastn.log
+            echo "No spades contigs or scaffold files found." >> ${dirSample}/errors.log
+            exit 1
         fi
         dirFASTA=${dirSample}/assembly
         """
 }
+
