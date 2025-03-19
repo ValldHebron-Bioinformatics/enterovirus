@@ -7,6 +7,7 @@ process BLASTN {
     Mapeo contra base de datos
     */
     //publishDir "$dirSample/assembly", pattern: 'out-blastn.txt', mode: 'copy'
+    errorStrategy 'ignore'
 
     input:
     tuple val(dirFASTA), val(seqsFasta)
@@ -28,6 +29,10 @@ process BLASTN {
         elif [ ! -f $dirFASTA/out-blastn.txt ] && [ -f $dirFASTA/out-blastn2.txt ]; then
             blastnout=$dirFASTA/out-blastn2.txt
         fi
+        if [ \$(cat \$blastnout | wc -l) -eq 0 ]; then
+            echo "No enterovirus sequences found." >> ${dirFASTA}/../errors.log
+            exit 1
+        fi
         """
     else if (params.input == 'fastq')
         if (params.protocol == 'complete')
@@ -37,12 +42,20 @@ process BLASTN {
             if [ -f $dirFASTA/out-blastn.txt ]; then
                 blastnout=$dirFASTA/out-blastn.txt
             fi
+            if [ \$(cat \$blastnout | wc -l) -eq 0 ]; then
+                echo "No enterovirus sequences found." >> ${dirFASTA}/../errors.log
+                exit 1
+            fi
             """
         else if (params.protocol == 'partial')
             """
             blastn -task dc-megablast -query $seqsFasta -db $params.references.VP1db -out $dirFASTA/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
             if [ -f $dirFASTA/out-blastn.txt ]; then
                 blastnout=$dirFASTA/out-blastn.txt
+            fi
+            if [ \$(cat \$blastnout | wc -l) -eq 0 ]; then
+                echo "No enterovirus sequences found." >> ${dirFASTA}/../errors.log
+                exit 1
             fi
             """
 }
