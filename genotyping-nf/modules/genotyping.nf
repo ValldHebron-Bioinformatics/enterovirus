@@ -30,7 +30,7 @@ process BLASTN {
             blastnout=$dirFASTA/out-blastn2.txt
         fi
         if [ \$(cat \$blastnout | wc -l) -eq 0 ]; then
-            echo "No enterovirus sequences found." >> ${dirFASTA}/../errors.log
+            echo "No enterovirus sequences found." >> ${dirFASTA}/errors.log
             exit 1
         fi
         """
