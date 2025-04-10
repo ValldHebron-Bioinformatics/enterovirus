@@ -10,10 +10,10 @@ process BLASTN {
     errorStrategy 'ignore'
 
     input:
-    tuple val(sample_id), val(seqsFasta), val(outputDir), val(extension),
+    tuple val(sample_id), val(seqsFasta), val(outputDir), val(extension)
 
     output:
-    tuple val(seqsFasta), val(outputDir), env('blastnout')
+    tuple val(outputDir), val(seqsFasta), val(extension), env('blastnout')
 
     script:
     if (extension == 'fasta')
@@ -66,15 +66,15 @@ process GETBLASTNMATCH {
     */
 
     input:
-    tuple val(dirFASTA), val(seqsFasta), val(blastnout)
+    tuple val(outputDir), val(seqsFasta), val(extension), val(blastnout)
 
     output:
-    val(dirFASTA)
+    val(outputDir)
 
     script:
     """
     #!/bin/bash
-    python3 $params.programs.generateFastas --blast $blastnout --scaffolds $seqsFasta --out-dir $dirFASTA --protocol $params.protocol --input $params.input --refs $params.references.speciesType
+    python3 $params.programs.generateFastas --blast $blastnout --scaffolds $seqsFasta --out-dir $outputDir --protocol $params.protocol --input $extension --refs $params.references.speciesType
     mkdir -p $dirFASTA/results
     if [[ $params.input == "fastq" ]]; then
         cp $dirFASTA/ev-match.fasta $dirFASTA/../results/ev-match.fasta
