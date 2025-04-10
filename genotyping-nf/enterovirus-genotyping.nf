@@ -40,29 +40,22 @@ Channel
 
 workflow {
     // Create directories for all samples
-    dir_ch = CREATEDIR(sample_run_ch.map { row -> row[0] })
+    dir_ch = CREATEDIR(sample_run_ch)
 
-    // Determine the file type and process samples
-    sample_run_ch.map { sample_id, file1, file2 ->
-        def extension = file1.tokenize('.').last()
-        tuple(sample_id, file1, file2, extension)
-    }.set { sample_run_with_ext_ch }
-
-    sample_run_with_ext_ch.map { sample_id, file1, file2, extension ->
-        if (extension == "fastq") {
-            def seqsFasta = processFastq([sample_id, file1, file2])
-            return tuple(sample_id, seqsFasta, extension)
-        } else if (extension == "fasta") {
-            def seqsFasta = Channel.of(file1)
-            return tuple(sample_id, seqsFasta, extension)
+    // Process each sample based on its file extension
+    processed_samples_ch = dir_ch.map { row ->
+        def (sample_id, file1, file2, outputDir, extension) = row // Destructure the row into its components
+        if (extension == 'fastq') {
+            return processFastq(row) // Call processFastq if the extension is 'fastq'
+        } elif (extension == 'fasta') {
+            return processFasta(row) // Call processFasta if the extension is 'fasta'
         } else {
-            exit 1, "Unsupported file extension '${extension}'. Only 'fastq' and 'fasta' are supported."
+            error "Unsupported file extension: ${extension}. Only 'fastq' and 'fasta' are supported."
         }
-    }.set { processed_samples_ch }
+    }
 
-    // Ensure BLASTN waits for seqsFasta to be generated
-    blastin_ch = processed_samples_ch.map { seqsFasta, extension -> [seqsFasta, extension, dir_ch.outputDir] }
-    blastn_ch = BLASTN(blastin_ch)
+    // Run final genotyping steps
+    blastn_ch = BLASTN(processed_samples_ch)
     get_match_ch = GETBLASTNMATCH(blastn_ch)
     get_cds_ch = GETCDS(get_match_ch)
     prot_match_ch = DIAMOND(get_cds_ch)
@@ -87,4 +80,9 @@ def processFastq(input) {
 
     // Pass the required inputs to the SPADES module
     return SPADES(spades_input_ch.map { tuple(it[0], it[1], it[2], it[0]) })
+}
+
+def processFasta(input) {
+    // Handle FASTA files if needed
+    return input.map { tuple(it[0], it[1], it[3], it[4]) }
 }

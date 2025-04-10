@@ -4,40 +4,21 @@ nextflow.enable.dsl = 2
 
 process CREATEDIR {
     /**
-    Create directories in samples folder from tmp files
+    Create directories and set variables
     */
 
     input:
-    val(sample)
-    
+    tuple val(sample_id), val(file1), val(file2)
+)
     output:
-    env(outputDir)
-    
+    tuple val(sample_id), val(file1), val(file2), env('outputDir'), env('extension')
+
     script:
     """
     #!/bin/bash
-    outputDir=$params.workdir/$params.user/$sample/
+    outputDir=$params.workdir/$params.user/$sample_id/
     mkdir -p \$outputDir
-    """
-}
-
-process GETFASTQS { 
-    /**
-    Get fastqs
-    */
-    
-    input:
-    tuple val(sample), val(fastq1), val(fastq2), val(dirSample)
-    
-    output:
-    tuple val(sample), env('FASTQ1'), env('FASTQ2'), val(dirSample)
-    
-    script:
-    """
-    #!/bin/bash
-    cp $params.rawfastqDir/$fastq1 $dirSample/fastq/$fastq1
-    cp $params.rawfastqDir/$fastq2 $dirSample/fastq/$fastq2
-    FASTQ1=$dirSample/fastq/$fastq1; FASTQ2=$dirSample/fastq/$fastq2
+    extension=\$(echo $file1 | awk -F. '{print \$NF}')
     """
 }
 
