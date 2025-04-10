@@ -28,16 +28,16 @@ process QUALCONTROL {
     */
     
     input:
-    tuple val(sample), val(fastq1), val(fastq2), val(dirSample)
-    
+    tuple val(sample_id), val(fastq1), val(fastq2), val(outputDir), val(extension)
+
     output:
-    tuple val(sample), path('*_paired-trim_1.fastq.gz'), path('*_paired-trim_2.fastq.gz'), val(dirSample)
+    tuple val(sample_id), path('*_paired-trim_1.fastq.gz'), path('*_paired-trim_2.fastq.gz'), val(outputDir), val(extension)
     
     script:
-    def output = "${sample}_paired-trim_1.fastq.gz ${sample}_unpaired-trim_1.fastq.gz ${sample}_paired-trim_2.fastq.gz ${sample}_unpaired-trim_2.fastq.gz"
+    def output = "${sample_id}_paired-trim_1.fastq.gz ${sample_id}_unpaired-trim_1.fastq.gz ${sample_id}_paired-trim_2.fastq.gz ${sample_id}_unpaired-trim_2.fastq.gz"
     """
     #!/bin/bash
-    trimmomatic PE -threads 24 $fastq1 $fastq2 $output LEADING:30 TRAILING:30 SLIDINGWINDOW:10:30
+    trimmomatic PE -threads $params.threads $fastq1 $fastq2 $output LEADING:30 TRAILING:30 SLIDINGWINDOW:10:30
     """
 }
 
@@ -47,14 +47,14 @@ process FILTHOST {
     */
     
     input:
-    tuple val(sample), path(fastq1), path(fastq2), val(dirSample)
-    
+    tuple val(sample_id), path(fastq1), path(fastq2), val(outputDir), val(extension)
+
     output:
-    tuple val(sample), path('*_host_removed_R1.fastq.gz'), path('*_host_removed_R2.fastq.gz'), val(dirSample)
+    tuple val(sample_id), path('*_host_removed_R1.fastq.gz'), path('*_host_removed_R2.fastq.gz'), val(outputDir), val(extension)
     """
     #!/bin/bash  
-    bowtie2 -p 24 -x $params.references.refHuman -1 $fastq1 -2 $fastq2 --un-conc-gz ${sample}_host_removed > ${sample}_host_mapped_and_unmapped.sam
-    mv ${sample}_host_removed.1 ${sample}_host_removed_R1.fastq.gz; mv ${sample}_host_removed.2 ${sample}_host_removed_R2.fastq.gz
+    bowtie2 -p $params.threads -x $params.references.refHuman -1 $fastq1 -2 $fastq2 --un-conc-gz ${sample_id}_host_removed > ${sample_id}_host_mapped_and_unmapped.sam
+    mv ${sample_id}_host_removed.1 ${sample_id}_host_removed_R1.fastq.gz; mv ${sample_id}_host_removed.2 ${sample_id}_host_removed_R2.fastq.gz
     """
 }
 
