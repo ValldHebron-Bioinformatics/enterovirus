@@ -123,7 +123,7 @@ process GENOTYPEVP1 {
     script:
     """
     #!/bin/bash
-    python3 $params.programs.getVP1 --dir $outputDir --diamond $outputDir/out-diamond.txt --refs $params.references.speciesType --pwd $params.references.getVP1ref
+    python3 $params.programs.getVP1 --dir $outputDir --diamond $outputDir/out-diamond.txt --refs $params.references.speciesType --pwd $params.references.EVreference
     awk -v outdir=$outputDir '/^>/ {out = outdir "/" substr(\$1, 2) ".fasta"; print > out} !/^>/ {print >> out}' $outputDir/VP1_nucl.fasta
     cp $outputDir/species-assignment.csv $outputDir/results/genotype-assignment.csv
     """
