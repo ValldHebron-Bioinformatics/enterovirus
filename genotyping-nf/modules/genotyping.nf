@@ -76,62 +76,54 @@ process GETBLASTNMATCH {
     #!/bin/bash
     python3 $params.programs.generateFastas --blast $blastnout --scaffolds $seqsFasta --out-dir $outputDir --protocol $params.protocol --input $extension --refs $params.references.speciesType
     mkdir -p $outputDir/results
-    if [[ $params.input == "fastq" ]]; then
-        cp $outputDir/ev-match.fasta $outputDir/../results/ev-match.fasta
-    else
-        cp $outputDir/ev-match.fasta $outputDir/results/ev-match.fasta
-    fi
+    cp $outputDir/ev-match.fasta $outputDir/results/ev-match.fasta
     """
 }
 
 process GETCDS {
 
     input:
-    val(dirFASTA)
+    val(outputDir)
 
     output:
-    tuple val(dirFASTA), env('cdsFile')
+    tuple val(outputDir), env('cdsFile')
 
     script:
     """
     #!/bin/bash
-    python3 $params.programs.translateSeq --seq $dirFASTA/ev-match.fasta --fastaNucl $dirFASTA/ev-match_cds-nucl.fasta --fastaProt $dirFASTA/ev-match_cds-aa.fasta
-    cdsFile=$dirFASTA/ev-match_cds-aa.fasta
+    python3 $params.programs.translateSeq --seq $outputDir/ev-match.fasta --fastaNucl $outputDir/ev-match_cds-nucl.fasta --fastaProt $outputDir/ev-match_cds-aa.fasta
+    cdsFile=$outputDir/ev-match_cds-aa.fasta
     """
 }
 
 process DIAMOND {
 
     input:
-    tuple val(dirFASTA), val(cdsFile)
+    tuple val(outputDir), val(cdsFile)
 
     output:
-    val(dirFASTA)
+    val(outputDir)
 
     script:
     """
     #!/bin/bash
-    $params.programs.diamond blastp --query $cdsFile --db $params.references.VP1dbDiamond --out $dirFASTA/out-diamond.txt --outfmt 6 qseqid sseqid bitscore evalue qstart qend sstart send
+    $params.programs.diamond blastp --query $cdsFile --db $params.references.VP1dbDiamond --out $outputDir/out-diamond.txt --outfmt 6 qseqid sseqid bitscore evalue qstart qend sstart send
     """
 }
 
 process GENOTYPEVP1 {
 
     input:
-    val(dirFASTA)
+    val(outputDir)
 
     output:
-    val(dirFASTA)
+    val(outputDir)
 
     script:
     """
     #!/bin/bash
-    python3 $params.programs.getVP1 --dir $dirFASTA --diamond $dirFASTA/out-diamond.txt --refs $params.references.speciesType --pwd $params.workdir
-    awk -v outdir=$dirFASTA '/^>/ {out = outdir "/" substr(\$1, 2) ".fasta"; print > out} !/^>/ {print >> out}' $dirFASTA/VP1_nucl.fasta
-    if [[ $params.input == "fastq" ]]; then
-        cp $dirFASTA/species-assignment.csv $dirFASTA/../results/genotype-assignment.csv
-    else
-        cp $dirFASTA/species-assignment.csv $dirFASTA/results/genotype-assignment.csv
-    fi
+    python3 $params.programs.getVP1 --dir $outputDir --diamond $outputDir/out-diamond.txt --refs $params.references.speciesType --pwd $params.workdir
+    awk -v outdir=$outputDir '/^>/ {out = outdir "/" substr(\$1, 2) ".fasta"; print > out} !/^>/ {print >> out}' $outputDir/VP1_nucl.fasta
+    cp $dirFASTA/species-assignment.csv $dirFASTA/results/genotype-assignment.csv
     """
 }
