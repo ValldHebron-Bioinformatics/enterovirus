@@ -9,7 +9,7 @@ process CREATEDIR {
 
     input:
     tuple val(sample_id), val(file1), val(file2)
-)
+
     output:
     tuple val(sample_id), val(file1), val(file2), env('outputDir'), env('extension')
 
