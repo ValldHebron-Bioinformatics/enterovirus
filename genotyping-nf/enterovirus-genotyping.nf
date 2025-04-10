@@ -41,6 +41,11 @@ if (params.fileType != 'fastq' && params.file_type != 'fasta') {
     exit 1, "Input file type '${params.fileType}' is not supported. Please choose either 'fastq' or 'fasta'."
 }
 
+// Check threads parameter
+if (!params.threads) {
+    exit 1, "Threads parameter is not defined. Please set the threads parameter."
+}
+
 // Workflow
 Channel
     .fromPath(params.file)

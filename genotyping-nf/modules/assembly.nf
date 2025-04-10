@@ -11,10 +11,10 @@ process SPADES {
     errorStrategy 'ignore'
 
     input:
-    tuple val(sample), val(fastq1), val(fastq2), val(userDir)
+    tuple val(sampleId), val(fastq1), val(fastq2), val(outputDir)
 
     output:
-    tuple env('dirFASTA'), env('seqsFasta')
+    tuple val(outputDir), env('seqsFasta')
 
     script:
     // Determine SPAdes mode based on the protocol
@@ -22,15 +22,15 @@ process SPADES {
 
     """
     #!/bin/bash
-    spades.py $spadesMode --threads ${params.threads ?: 24} -1 $fastq1 -2 $fastq2 -o ${userDir}/assembly/spades
+    spades.py $spadesMode --threads params.threads -1 $fastq1 -2 $fastq2 -o ${outputDir}/assembly/spades
 
     # Check for output files and set the seqsFasta variable
-    if [ -f ${userDir}/${sample}/assembly/spades/scaffolds.fasta ]; then
-        seqsFasta=${userDir}/${sample}/assembly/spades/scaffolds.fasta
-    elif [ -f ${userDir}/assembly/spades/contigs.fasta ]; then
-        seqsFasta=${userDir}/${sample}/assembly/spades/contigs.fasta
+    if [ -f ${outputDir}/assembly/spades/scaffolds.fasta ]; then
+        seqsFasta=${outputDir}/assembly/spades/scaffolds.fasta
+    elif [ -f ${outputDir}/assembly/spades/contigs.fasta ]; then
+        seqsFasta=${outputDir}/assembly/spades/contigs.fasta
     else
-        echo "No SPAdes contigs or scaffolds assembled." >> ${userDir}/${sample}/errors.log
+        echo "No SPAdes contigs or scaffolds assembled." >> ${outputDir}/errors.log
         exit 1
     fi
     """
