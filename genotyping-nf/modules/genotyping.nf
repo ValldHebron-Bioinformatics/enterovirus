@@ -10,7 +10,7 @@ process BLASTN {
     errorStrategy 'ignore'
 
     input:
-    tuple val(seqsFasta), var(extension), var(outputDir)
+    tuple val(seqsFasta), val(extension), val(outputDir)
 
     output:
     tuple val(seqsFasta), env('blastnout')
