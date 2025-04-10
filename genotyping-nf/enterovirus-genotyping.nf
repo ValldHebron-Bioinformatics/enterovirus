@@ -34,12 +34,14 @@ workflow {
         else {
             spades_input_ch = filt_host_ch
         }
-        blastin_ch = SPADES(spades_input_ch)
+        seqsFasta = SPADES(spades_input_ch)
     }
     else {
         // Asumes fasta
-        blastin_ch = Channel.of([params.user, params.file])
+        seqsFasta = params.file
+        
     }
+    blastin_ch = Channel.of([params.user, seqsFasta])
     blastn_ch = BLASTN(blastin_ch)
     get_match_ch = GETBLASTNMATCH(blastn_ch)
     get_cds_ch = GETCDS(get_match_ch)

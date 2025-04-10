@@ -75,6 +75,7 @@ process GETBLASTNMATCH {
     """
     #!/bin/bash
     python3 $params.programs.generateFastas --blast $blastnout --scaffolds $seqsFasta --out-dir $dirFASTA --protocol $params.protocol --input $params.input --refs $params.references.speciesType
+    mkdir -p $dirFASTA/results
     if [[ $params.input == "fastq" ]]; then
         cp $dirFASTA/ev-match.fasta $dirFASTA/../results/ev-match.fasta
     else

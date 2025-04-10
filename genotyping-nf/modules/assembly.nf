@@ -12,7 +12,7 @@ process SPADES {
     tuple val(sample), val(fastq1), val(fastq2), val(dirSample)
 
     output:
-    tuple env('dirFASTA'), env('seqsFasta')
+    path env('seqsFasta')
 
     script:
     if (params.protocol == 'complete')
@@ -27,7 +27,6 @@ process SPADES {
             echo "No SPAdes contigs or scaffolds assembled." >> ${dirSample}/errors.log
             exit 1
         fi
-        dirFASTA=${dirSample}/assembly
         """
     else if (params.protocol == 'partial')
         """
@@ -41,7 +40,6 @@ process SPADES {
             echo "No spades contigs or scaffold files found." >> ${dirSample}/errors.log
             exit 1
         fi
-        dirFASTA=${dirSample}/assembly
         """
 }
 
