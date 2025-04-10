@@ -31,6 +31,16 @@ if (!params.file.endsWith('.csv')) {
     exit 1, "Input file '${params.file}' is not a valid CSV file. Please provide a CSV file."
 }
 
+// Check if the file type is defined
+if (!params.fileType) {
+    exit 1, "Input file type is not defined. Please set the fileType parameter."
+}
+
+// Check input file type is either fastq or fasta
+if (params.fileType != 'fastq' && params.file_type != 'fasta') {
+    exit 1, "Input file type '${params.fileType}' is not supported. Please choose either 'fastq' or 'fasta'."
+}
+
 // Workflow
 Channel
     .fromPath(params.file)
@@ -42,16 +52,26 @@ workflow {
     // Create directories for all samples
     dir_ch = CREATEDIR(sample_run_ch)
 
-    // Process each sample based on its file extension
-    processed_samples_ch = dir_ch.map { row ->
-        def (sample_id, file1, file2, outputDir, extension) = row // Destructure the row into its components
-        if (extension == 'fastq' || extension == 'fastq.gz') {
-            return processFastq(row) // Call processFastq if the extension is 'fastq' or 'fastq.gz'
-        } else if (extension == 'fasta') {
-            return processFasta(row) // Call processFasta if the extension is 'fasta'
-        } else {
-            error "Unsupported file extension: ${extension}. Only 'fastq' and 'fasta' are supported."
+    // Process FASTQ files
+    if (params.fileType == 'fastq')
+    {
+        fastq_qc_ch = QUALCONTROL(dir_ch)
+        filt_host_ch = FILTHOST(fastq_qc_ch)
+        if (params.primers) {
+            primers = Channel.of(params.primers)
+            trimr_primers_ch = TRIMPRIMERSR(filt_host_ch.combine(primers))
+            triml_primers_ch = TRIMPRIMERSL(trimr_primers_ch)
+            spades_input_ch = triml_primers_ch
         }
+        else {
+            spades_input_ch = filt_host_ch
+        }
+        processed_samples_ch = SPADES(spades_input_ch)
+
+    }
+    // Process FASTA files
+    else if (params.fileType == 'fasta') {
+        processed_samples_ch = dir_ch.map { tuple(it[0], it[1], it[2]) }
     }
 
     // Run final genotyping steps
@@ -60,27 +80,4 @@ workflow {
     get_cds_ch = GETCDS(get_match_ch)
     prot_match_ch = DIAMOND(get_cds_ch)
     vp1_ch = GENOTYPEVP1(prot_match_ch)
-}
-
-// Helper function to process FASTQ files
-def processFastq(input) {
-    fastq_qc_ch = QUALCONTROL(fastq_ch)
-    filt_host_ch = FILTHOST(fastq_qc_ch)
-
-    if (params.primers) {
-        primers = Channel.of(params.primers)
-        trimr_primers_ch = TRIMPRIMERSR(filt_host_ch.combine(primers))
-        triml_primers_ch = TRIMPRIMERSL(trimr_primers_ch)
-        spades_input_ch = triml_primers_ch
-    } else {
-        spades_input_ch = filt_host_ch
-    }
-
-    // Pass the required inputs to the SPADES module
-    return SPADES(spades_input_ch.map { tuple(it[0], it[1], it[2], it[0]) })
-}
-
-def processFasta(input) {
-    // Handle FASTA files if needed
-    return tuple(input[0], input[1], input[3], input[4])
 }

@@ -14,9 +14,7 @@ process SPADES {
     tuple val(sample), val(fastq1), val(fastq2), val(userDir)
 
     output:
-    path "${userDir}/${sample}/assembly/spades/scaffolds.fasta", optional: true
-    path "${userDir}/${sample}/assembly/spades/contigs.fasta", optional: true
-    path "${userDir}/${sample}/errors.log", emit: errors
+    tuple env('dirFASTA'), env('seqsFasta')
 
     script:
     // Determine SPAdes mode based on the protocol
