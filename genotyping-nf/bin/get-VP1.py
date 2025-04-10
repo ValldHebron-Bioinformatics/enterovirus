@@ -50,7 +50,7 @@ for _, row in diamonddf.iterrows():
     elif speciesType[row[1].split('_')[1]] == "Enterovirus betacoxsackie": sp = "EV-B_reference-VP1_nucleotide.fasta"
     elif speciesType[row[1].split('_')[1]] == "Enterovirus coxsackiepol": sp = "EV-C_reference-VP1_nucleotide.fasta"
     elif speciesType[row[1].split('_')[1]] == "Enterovirus deconjuncti": sp = "EV-D_reference-VP1_nucleotide.fasta"
-    results.loc[len(results)] = [pwd+dirpath, 'VP1', pwd+dirpath+"/"+seq_id+".fasta", pwd+"files/vp1-db/"+sp]
+    results.loc[len(results)] = [dirpath, 'VP1', dirpath+"/"+seq_id+".fasta", pwd+sp]
 
 # Close output files
 prot_output.close()
