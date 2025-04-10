@@ -19,19 +19,19 @@ process CREATEDIR {
     outputDir=$params.workdir/$params.user/$sampleId/
     mkdir -p \$outputDir
 
-    if [[ \$file1 == *.fastq.gz ]]; then
+    if [[ $file1 == *.fastq.gz ]]; then
         extension="fastq.gz"
-    elif [[ \$file1 == *.fastq ]]; then
+    elif [[ $file1 == *.fastq ]]; then
         extension="fastq"
-    elif [[ \$file1 == *.fasta ]]; then
+    elif [[ $file1 == *.fasta ]]; then
         extension="fasta"
     else
-        echo "Unsupported file extension for \$file1"
+        echo "Unsupported file extension for $file1"
         exit 1
     fi
 
-    file1=\$(realpath \$file1)
-    file2=\$(realpath \$file2)
+    file1=\$(realpath $file1)
+    file2=\$(realpath $file2)
 
     if [ ! -f \$file1 ]; then
         echo "File \$file1 does not exist."
