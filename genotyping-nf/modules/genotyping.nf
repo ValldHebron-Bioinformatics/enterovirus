@@ -10,51 +10,51 @@ process BLASTN {
     errorStrategy 'ignore'
 
     input:
-    tuple val(dirFASTA), val(seqsFasta)
+    tuple val(seqsFasta), var(extension), var(outputDir)
 
     output:
-    tuple val(dirFASTA), val(seqsFasta), env('blastnout')
+    tuple val(seqsFasta), env('blastnout')
 
     script:
-    if (params.input == 'fasta')
+    if (extension == 'fasta')
         """
         #!/bin/bash
-        blastn -query $seqsFasta -db $params.references.EVdb -out $dirFASTA/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
-        blastn -task dc-megablast -query $seqsFasta -db $params.references.VP1db -out $dirFASTA/out-blastn2.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
-        if [ -f $dirFASTA/out-blastn.txt ] && [ -f $dirFASTA/out-blastn2.txt ]; then
-            cat $dirFASTA/out-blastn2.txt >> $dirFASTA/out-blastn.txt
-            blastnout=$dirFASTA/out-blastn.txt
-        elif [ -f $dirFASTA/out-blastn.txt ] && [ ! -f $dirFASTA/out-blastn2.txt ]; then
-            blastnout=$dirFASTA/out-blastn.txt
-        elif [ ! -f $dirFASTA/out-blastn.txt ] && [ -f $dirFASTA/out-blastn2.txt ]; then
-            blastnout=$dirFASTA/out-blastn2.txt
+        blastn -query $seqsFasta -db $params.references.EVdb -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
+        blastn -task dc-megablast -query $seqsFasta -db $params.references.VP1db -out $outputDir/out-blastn2.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
+        if [ -f $outputDir/out-blastn.txt ] && [ -f $outputDir/out-blastn2.txt ]; then
+            cat $outputDir/out-blastn2.txt >> $outputDir/out-blastn.txt
+            blastnout=$outputDir/out-blastn.txt
+        elif [ -f $outputDir/out-blastn.txt ] && [ ! -f $outputDir/out-blastn2.txt ]; then
+            blastnout=$outputDir/out-blastn.txt
+        elif [ ! -f $outputDir/out-blastn.txt ] && [ -f $outputDir/out-blastn2.txt ]; then
+            blastnout=$outputDir/out-blastn2.txt
         fi
         if [ \$(cat \$blastnout | wc -l) -eq 0 ]; then
-            echo "No enterovirus sequences found." >> ${dirFASTA}/errors.log
+            echo "No enterovirus sequences found." >> ${outputDir}/errors.log
             exit 1
         fi
         """
-    else if (params.input == 'fastq')
+    else if (extension == 'fastq')
         if (params.protocol == 'complete')
             """
             #!/bin/bash
-            blastn -query $seqsFasta -db $params.references.EVdb -out $dirFASTA/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
-            if [ -f $dirFASTA/out-blastn.txt ]; then
-                blastnout=$dirFASTA/out-blastn.txt
+            blastn -query $seqsFasta -db $params.references.EVdb -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
+            if [ -f $outputDir/out-blastn.txt ]; then
+                blastnout=$outputDir/out-blastn.txt
             fi
             if [ \$(cat \$blastnout | wc -l) -eq 0 ]; then
-                echo "No enterovirus sequences found." >> ${dirFASTA}/../errors.log
+                echo "No enterovirus sequences found." >> ${outputDir}/../errors.log
                 exit 1
             fi
             """
         else if (params.protocol == 'partial')
             """
-            blastn -task dc-megablast -query $seqsFasta -db $params.references.VP1db -out $dirFASTA/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
-            if [ -f $dirFASTA/out-blastn.txt ]; then
-                blastnout=$dirFASTA/out-blastn.txt
+            blastn -task dc-megablast -query $seqsFasta -db $params.references.VP1db -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
+            if [ -f $outputDir/out-blastn.txt ]; then
+                blastnout=$outputDir/out-blastn.txt
             fi
             if [ \$(cat \$blastnout | wc -l) -eq 0 ]; then
-                echo "No enterovirus sequences found." >> ${dirFASTA}/../errors.log
+                echo "No enterovirus sequences found." >> ${outputDir}/../errors.log
                 exit 1
             fi
             """

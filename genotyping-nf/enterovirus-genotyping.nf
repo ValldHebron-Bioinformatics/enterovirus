@@ -61,7 +61,7 @@ workflow {
     }.set { processed_samples_ch }
 
     // Ensure BLASTN waits for seqsFasta to be generated
-    blastin_ch = processed_samples_ch.map { sample_id, seqsFasta, extension -> [params.user, seqsFasta, extension] }
+    blastin_ch = processed_samples_ch.map { seqsFasta, extension -> [seqsFasta, extension, dir_ch.outputDir] }
     blastn_ch = BLASTN(blastin_ch)
     get_match_ch = GETBLASTNMATCH(blastn_ch)
     get_cds_ch = GETCDS(get_match_ch)

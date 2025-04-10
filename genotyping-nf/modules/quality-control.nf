@@ -8,18 +8,17 @@ process CREATEDIR {
     */
 
     input:
-    val sample
+    val(sample)
     
     output:
-    val outputDir
+    env(outputDir)
     
     script:
     """
     #!/bin/bash
     outputDir=$params.workdir/$params.user/$sample/
-    mkdir -p $outputDir
-    echo $outputDir
-    """    
+    mkdir -p \$outputDir
+    """
 }
 
 process GETFASTQS { 
