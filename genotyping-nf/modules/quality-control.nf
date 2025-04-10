@@ -11,14 +11,14 @@ process CREATEDIR {
     tuple val(sample), val(fastq1), val(fastq2)
     
     output:
-    tuple val(sample), val(fastq1), val(fastq2), env('DIR_SAMPLE')
+    tuple val(sample), val(fastq1), val(fastq2), env('USER')
     
     script:
     """
     #!/bin/bash
-    mkdir $params.samplesDir/$sample; DIR_SAMPLE=$params.samplesDir/$sample
-    mkdir "\$DIR_SAMPLE"/qc "\$DIR_SAMPLE"/assembly "\$DIR_SAMPLE"/fastq "\$DIR_SAMPLE"/mutations "\$DIR_SAMPLE"/variant_calling "\$DIR_SAMPLE"/results
-    touch "\$DIR_SAMPLE"/errors.log
+    mkdir $params.workdir/$params.user/$sample/
+    #mkdir "\$DIR_SAMPLE"/qc "\$DIR_SAMPLE"/assembly "\$DIR_SAMPLE"/fastq "\$DIR_SAMPLE"/mutations "\$DIR_SAMPLE"/variant_calling "\$DIR_SAMPLE"/results
+    #touch "\$DIR_SAMPLE"/errors.log
     """    
 }
 
