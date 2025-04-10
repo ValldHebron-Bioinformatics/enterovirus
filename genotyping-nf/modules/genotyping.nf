@@ -124,6 +124,6 @@ process GENOTYPEVP1 {
     #!/bin/bash
     python3 $params.programs.getVP1 --dir $outputDir --diamond $outputDir/out-diamond.txt --refs $params.references.speciesType --pwd $params.workdir
     awk -v outdir=$outputDir '/^>/ {out = outdir "/" substr(\$1, 2) ".fasta"; print > out} !/^>/ {print >> out}' $outputDir/VP1_nucl.fasta
-    cp $dirFASTA/species-assignment.csv $dirFASTA/results/genotype-assignment.csv
+    cp $outputDir/species-assignment.csv $outputDir/results/genotype-assignment.csv
     """
 }
