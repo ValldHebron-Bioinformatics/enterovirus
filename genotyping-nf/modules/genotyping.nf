@@ -75,11 +75,11 @@ process GETBLASTNMATCH {
     """
     #!/bin/bash
     python3 $params.programs.generateFastas --blast $blastnout --scaffolds $seqsFasta --out-dir $outputDir --protocol $params.protocol --input $extension --refs $params.references.speciesType
-    mkdir -p $dirFASTA/results
+    mkdir -p $outputDir/results
     if [[ $params.input == "fastq" ]]; then
-        cp $dirFASTA/ev-match.fasta $dirFASTA/../results/ev-match.fasta
+        cp $outputDir/ev-match.fasta $outputDir/../results/ev-match.fasta
     else
-        cp $dirFASTA/ev-match.fasta $dirFASTA/results/ev-match.fasta
+        cp $outputDir/ev-match.fasta $outputDir/results/ev-match.fasta
     fi
     """
 }
