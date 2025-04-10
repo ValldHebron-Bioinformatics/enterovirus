@@ -76,7 +76,7 @@ workflow {
     }
     // Process FASTA files
     else if (params.fileType == 'fasta') {
-        processed_samples_ch = dir_ch.map { tuple(it[0], it[1], it[2]) }
+        processed_samples_ch = dir_ch.map { tuple(it[0], it[1], it[3]) }
     }
 
     // Run final genotyping steps
