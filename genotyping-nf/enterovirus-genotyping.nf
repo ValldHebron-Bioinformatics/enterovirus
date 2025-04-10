@@ -37,7 +37,7 @@ if (!params.fileType) {
 }
 
 // Check input file type is either fastq or fasta
-if (params.fileType != 'fastq' && params.file_type != 'fasta') {
+if (params.fileType != 'fastq' && params.fileType != 'fasta') {
     exit 1, "Input file type '${params.fileType}' is not supported. Please choose either 'fastq' or 'fasta'."
 }
 
