@@ -10,13 +10,13 @@ process BLASTN {
     errorStrategy 'ignore'
 
     input:
-    tuple val(sample_id), val(seqsFasta), val(outputDir), val(extension)
+    tuple val(sample_id), val(seqsFasta), val(outputDir)
 
     output:
-    tuple val(outputDir), val(seqsFasta), val(extension), env('blastnout')
+    tuple val(outputDir), val(seqsFasta), env('blastnout')
 
     script:
-    if (extension == 'fasta')
+    if (params.fileType == 'fasta')
         """
         #!/bin/bash
         blastn -query $seqsFasta -db $params.references.EVdb -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
@@ -34,7 +34,7 @@ process BLASTN {
             exit 1
         fi
         """
-    else if (extension == 'fastq')
+    else if (params.fileType == 'fastq')
         if (params.protocol == 'complete')
             """
             #!/bin/bash
@@ -66,7 +66,7 @@ process GETBLASTNMATCH {
     */
 
     input:
-    tuple val(outputDir), val(seqsFasta), val(extension), val(blastnout)
+    tuple val(outputDir), val(seqsFasta), val(blastnout)
 
     output:
     val(outputDir)
@@ -74,7 +74,7 @@ process GETBLASTNMATCH {
     script:
     """
     #!/bin/bash
-    python3 $params.programs.generateFastas --blast $blastnout --scaffolds $seqsFasta --out-dir $outputDir --protocol $params.protocol --input $extension --refs $params.references.speciesType
+    python3 $params.programs.generateFastas --blast $blastnout --scaffolds $seqsFasta --out-dir $outputDir --protocol $params.protocol --input $params.fileType --refs $params.references.speciesType
     mkdir -p $outputDir/results
     cp $outputDir/ev-match.fasta $outputDir/results/ev-match.fasta
     cp $outputDir/species-assignment.csv $outputDir/results/species-assignment.csv

@@ -11,7 +11,7 @@ process CREATEDIR {
     tuple val(sampleId), val(file1), val(file2)
 
     output:
-    tuple val(sampleId), val(file1), val(file2), env('outputDir'), env('extension')
+    tuple val(sampleId), val(file1), val(file2), env('outputDir')
 
     script:
     """
@@ -45,10 +45,10 @@ process QUALCONTROL {
     */
     
     input:
-    tuple val(sampleId), val(fastq1), val(fastq2), val(outputDir), val(extension)
+    tuple val(sampleId), val(fastq1), val(fastq2), val(outputDir)
 
     output:
-    tuple val(sampleId), path('*_paired-trim_1.fastq.gz'), path('*_paired-trim_2.fastq.gz'), val(outputDir), val(extension)
+    tuple val(sampleId), path('*_paired-trim_1.fastq.gz'), path('*_paired-trim_2.fastq.gz'), val(outputDir)
     
     script:
     def output = "${sampleId}_paired-trim_1.fastq.gz ${sampleId}_unpaired-trim_1.fastq.gz ${sampleId}_paired-trim_2.fastq.gz ${sampleId}_unpaired-trim_2.fastq.gz"
@@ -64,10 +64,10 @@ process FILTHOST {
     */
     
     input:
-    tuple val(sampleId), path(fastq1), path(fastq2), val(outputDir), val(extension)
+    tuple val(sampleId), path(fastq1), path(fastq2), val(outputDir)
 
     output:
-    tuple val(sampleId), path('*_host_removed_R1.fastq.gz'), path('*_host_removed_R2.fastq.gz'), val(outputDir), val(extension)
+    tuple val(sampleId), path('*_host_removed_R1.fastq.gz'), path('*_host_removed_R2.fastq.gz'), val(outputDir)
     """
     #!/bin/bash  
     bowtie2 -p $params.threads -x $params.references.refHuman -1 $fastq1 -2 $fastq2 --un-conc-gz ${sampleId}_host_removed > ${sampleId}_host_mapped_and_unmapped.sam
