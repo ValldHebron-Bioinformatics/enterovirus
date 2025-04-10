@@ -31,16 +31,20 @@ process CREATEDIR {
     fi
 
     file1=\$(realpath $file1)
-    file2=\$(realpath $file2)
 
     if [ ! -f \$file1 ]; then
         echo "File \$file1 does not exist."
         exit 1
     fi
 
-    if [ ! -f \$file2 ]; then
-        echo "File \$file2 does not exist."
-        exit 1
+    # Check if second file is not '-'
+    if [ "$file2" != "-" ]; then
+        file2=\$(realpath $file2)
+
+        if [ ! -f \$file2 ]; then
+            echo "File \$file2 does not exist."
+            exit 1
+        fi
     fi
     """
 }
