@@ -82,5 +82,5 @@ def processFastq(input) {
 
 def processFasta(input) {
     // Handle FASTA files if needed
-    return input.map { tuple(it[0], it[1], it[3], it[4]) }
+    return tuple(input[0], input[1], input[3], input[4])
 }

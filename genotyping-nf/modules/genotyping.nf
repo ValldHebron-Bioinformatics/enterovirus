@@ -10,10 +10,10 @@ process BLASTN {
     errorStrategy 'ignore'
 
     input:
-    tuple val(seqsFasta), val(extension), val(outputDir)
+    tuple val(sample_id), val(seqsFasta), val(outputDir), val(extension),
 
     output:
-    tuple val(seqsFasta), env('blastnout')
+    tuple val(seqsFasta), val(outputDir), env('blastnout')
 
     script:
     if (extension == 'fasta')
