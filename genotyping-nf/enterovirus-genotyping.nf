@@ -38,7 +38,7 @@ workflow {
     }
     else {
         // Asumes fasta
-        blastin_ch = Channel.of([params.user, params.fastaFile])
+        blastin_ch = Channel.of([params.user, params.file])
     }
     blastn_ch = BLASTN(blastin_ch)
     get_match_ch = GETBLASTNMATCH(blastn_ch)
