@@ -16,6 +16,21 @@ if (!params.user) {
     exit 1, "User is not defined. Please set the user parameter."
 }
 
+// Check if the input file is provided
+if (!params.file) {
+    exit 1, "Input file is not provided. Please set the file parameter."
+}
+
+// Check if the input file exists
+if (!file(params.file).exists()) {
+    exit 1, "Input file '${params.file}' does not exist."
+}
+
+// Check if the input file is a valid CSV
+if (!params.file.endsWith('.csv')) {
+    exit 1, "Input file '${params.file}' is not a valid CSV file. Please provide a CSV file."
+}
+
 // Workflow
 Channel
     .fromPath(params.file)
@@ -25,28 +40,28 @@ Channel
 
 workflow {
     // Create directories for all samples
-    dir_ch = CREATEDIR(sample_run_ch)
+    dir_ch = CREATEDIR(sample_run_ch.map { row -> row[0] })
 
-    // Determine the file type based on the extension of file1
+    // Determine the file type and process samples
     sample_run_ch.map { sample_id, file1, file2 ->
         def extension = file1.tokenize('.').last()
         tuple(sample_id, file1, file2, extension)
     }.set { sample_run_with_ext_ch }
 
-    sample_run_with_ext_ch.branch {
-        it[3] == "fastq" -> {
-            processFastq(it)
+    sample_run_with_ext_ch.map { sample_id, file1, file2, extension ->
+        if (extension == "fastq") {
+            def seqsFasta = processFastq([sample_id, file1, file2])
+            return tuple(sample_id, seqsFasta, extension)
+        } else if (extension == "fasta") {
+            def seqsFasta = Channel.of(file1)
+            return tuple(sample_id, seqsFasta, extension)
+        } else {
+            exit 1, "Unsupported file extension '${extension}'. Only 'fastq' and 'fasta' are supported."
         }
-        it[3] == "fasta" -> {
-            seqsFasta = it[1]
-        }
-        default -> {
-            exit 1, "Unsupported file extension '${it[3]}'. Only 'fastq' and 'fasta' are supported."
-        }
-    }
+    }.set { processed_samples_ch }
 
     // Ensure BLASTN waits for seqsFasta to be generated
-    blastin_ch = seqsFasta.map { fasta -> [params.user, fasta] }
+    blastin_ch = processed_samples_ch.map { sample_id, seqsFasta, extension -> [params.user, seqsFasta, extension] }
     blastn_ch = BLASTN(blastin_ch)
     get_match_ch = GETBLASTNMATCH(blastn_ch)
     get_cds_ch = GETCDS(get_match_ch)
@@ -71,5 +86,5 @@ def processFastq(input) {
     }
 
     // Pass the required inputs to the SPADES module
-    seqsFasta = SPADES(spades_input_ch.map { tuple(it[0], it[1], it[2], it[0]) })
+    return SPADES(spades_input_ch.map { tuple(it[0], it[1], it[2], it[0]) })
 }
