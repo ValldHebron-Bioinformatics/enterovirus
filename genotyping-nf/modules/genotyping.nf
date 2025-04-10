@@ -77,6 +77,7 @@ process GETBLASTNMATCH {
     python3 $params.programs.generateFastas --blast $blastnout --scaffolds $seqsFasta --out-dir $outputDir --protocol $params.protocol --input $extension --refs $params.references.speciesType
     mkdir -p $outputDir/results
     cp $outputDir/ev-match.fasta $outputDir/results/ev-match.fasta
+    cp $outputDir/species-assignment.csv $outputDir/results/species-assignment.csv
     """
 }
 
