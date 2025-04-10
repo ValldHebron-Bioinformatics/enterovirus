@@ -14,7 +14,7 @@ process SPADES {
     tuple val(sampleId), val(fastq1), val(fastq2), val(outputDir)
 
     output:
-    tuple val(outputDir), env('seqsFasta')
+    tuple val(sample_id), env('seqsFasta'), val(outputDir)
 
     script:
     // Determine SPAdes mode based on the protocol
