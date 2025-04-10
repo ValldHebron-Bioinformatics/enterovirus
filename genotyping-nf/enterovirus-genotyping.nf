@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl = 2
 
-include { CREATEDIR; GETFASTQS; QUALCONTROL; FILTHOST; TRIMPRIMERSR; TRIMPRIMERSL } from './modules/quality-control'
+include { CREATEDIR; QUALCONTROL; FILTHOST; TRIMPRIMERSR; TRIMPRIMERSL } from './modules/quality-control'
 include { SPADES                                                                  } from './modules/assembly'
 include { BLASTN; GETBLASTNMATCH; GETCDS; DIAMOND; GENOTYPEVP1                    } from './modules/genotyping'
 
@@ -64,8 +64,6 @@ workflow {
 
 // Helper function to process FASTQ files
 def processFastq(input) {
-    dir_ch = CREATEDIR(sample_run_ch)
-    fastq_ch = GETFASTQS(dir_ch)
     fastq_qc_ch = QUALCONTROL(fastq_ch)
     filt_host_ch = FILTHOST(fastq_qc_ch)
 
