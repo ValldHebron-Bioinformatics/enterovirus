@@ -47,7 +47,7 @@ workflow {
         def (sample_id, file1, file2, outputDir, extension) = row // Destructure the row into its components
         if (extension == 'fastq') {
             return processFastq(row) // Call processFastq if the extension is 'fastq'
-        } elif (extension == 'fasta') {
+        } else if (extension == 'fasta') {
             return processFasta(row) // Call processFasta if the extension is 'fasta'
         } else {
             error "Unsupported file extension: ${extension}. Only 'fastq' and 'fasta' are supported."
