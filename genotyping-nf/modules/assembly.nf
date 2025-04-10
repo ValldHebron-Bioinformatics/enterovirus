@@ -22,7 +22,7 @@ process SPADES {
 
     """
     #!/bin/bash
-    spades.py $spadesMode --threads params.threads -1 $fastq1 -2 $fastq2 -o ${outputDir}/assembly/spades
+    spades.py $spadesMode --threads $params.threads -1 $fastq1 -2 $fastq2 -o ${outputDir}/assembly/spades
 
     # Check for output files and set the seqsFasta variable
     if [ -f ${outputDir}/assembly/spades/scaffolds.fasta ]; then
