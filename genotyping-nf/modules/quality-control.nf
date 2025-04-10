@@ -18,7 +18,16 @@ process CREATEDIR {
     #!/bin/bash
     outputDir=$params.workdir/$params.user/$sample_id/
     mkdir -p \$outputDir
-    extension=\$(echo $file1 | awk -F. '{print \$NF}')
+    if [[ $file1 == *.fastq.gz ]]; then
+        extension="fastq.gz"
+    elif [[ $file1 == *.fastq ]]; then
+        extension="fastq"
+    elif [[ $file1 == *.fasta ]]; then
+        extension="fasta"
+    else
+        echo "Unsupported file extension for $file1"
+        exit 1
+    fi
     """
 }
 
