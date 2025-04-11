@@ -21,10 +21,22 @@ process CREATEDIR {
 
     if [[ $file1 == *.fastq.gz ]]; then
         extension="fastq.gz"
+        if [[ $params.fileType == "fastA" ]]; then
+            echo "File $file1 is in FASTQ format, but the input file type is set to FASTA."
+            exit 1
+        fi
     elif [[ $file1 == *.fastq ]]; then
         extension="fastq"
+        if [[ $params.fileType == "fasta" ]]; then
+            echo "File $file1 is in FASTQ format, but the input file type is set to FASTA."
+            exit 1
+        fi
     elif [[ $file1 == *.fasta ]]; then
         extension="fasta"
+        if [[ $params.fileType == "fastq" ]]; then
+            echo "File $file1 is in FASTA format, but the input file type is set to FASTQ."
+            exit 1
+        fi
     else
         echo "Unsupported file extension for $file1"
         exit 1
