@@ -23,6 +23,13 @@ process INPUT_PREPARATION1 {
     fi
 
     grep "\$gt" ${EVref} | tr -d '>' > name.txt
+
+    # Check if the reference file is empty
+    if [ ! -s name.txt ]; then
+        echo "Reference file is empty. Exiting."
+        exit 1
+    fi
+    
     seqtk subseq ${EVref} name.txt > ref_\${gt}.fasta; rm name.txt
 
     mv ${VP1cons} cons_VP1.fasta

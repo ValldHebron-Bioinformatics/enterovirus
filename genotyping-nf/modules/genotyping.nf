@@ -78,7 +78,6 @@ process GETBLASTNMATCH {
     mkdir -p $outputDir/results
     cp $outputDir/ev-match.fasta $outputDir/results/ev-match.fasta
     cp $outputDir/species-assignment.csv $outputDir/results/species-assignment.csv
-    cp $outputDir/sample-mutations.csv $outputDir/results/sample-mutations.csv
     """
 }
 
@@ -126,6 +125,6 @@ process GENOTYPEVP1 {
     #!/bin/bash
     python3 $params.programs.getVP1 --dir $outputDir --diamond $outputDir/out-diamond.txt --refs $params.references.speciesType --pwd $params.references.EVreference
     awk -v outdir=$outputDir '/^>/ {out = outdir "/" substr(\$1, 2) ".fasta"; print > out} !/^>/ {print >> out}' $outputDir/VP1_nucl.fasta
-    cp $outputDir/species-assignment.csv $outputDir/results/genotype-assignment.csv
+    cp $outputDir/sample-mutations.csv $outputDir/results/sample-mutations.csv
     """
 }

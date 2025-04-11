@@ -10,7 +10,12 @@ include { VIRAL_POPULATION } from './modules/viral-population'
 Channel
     .fromPath( params.file )
     .splitCsv( header: true, sep: ',' )
-    .map { row -> tuple( row[0], row[1], row[2], row[3] ) }
+    .map { row -> 
+        tuple(file(row.SAMPLE_DIR),
+        row.prot,
+        file(row.VP1consensus),
+        file(row.EVreference))
+    }
     .set { inputs }
 
 
