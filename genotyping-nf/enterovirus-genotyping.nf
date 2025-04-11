@@ -49,7 +49,7 @@ if (!params.threads) {
 // Workflow
 Channel
     .fromPath(params.file)
-    .splitCsv(header: false, sep: ';')
+    .splitCsv(header: false, sep: ',')
     .map { row -> tuple(row[0], row[1], row[2]) }
     .set { sample_run_ch }
 
