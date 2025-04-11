@@ -30,19 +30,27 @@ process CREATEDIR {
         exit 1
     fi
 
-    file1=\$(realpath $file1)
+    # Check file1 path is absolute
+    if [[ $file1 != /* ]]; then
+        echo "File $file1 is not an absolute path."
+        exit 1
+    fi
 
-    if [ ! -f \$file1 ]; then
-        echo "File \$file1 does not exist."
+    if [ ! -f $file1 ]; then
+        echo "File $file1 does not exist."
         exit 1
     fi
 
     # Check if second file is not '-'
     if [ "$file2" != "-" ]; then
-        file2=\$(realpath $file2)
+        # Check file2 path is absolute
+        if [[ $file2 != /* ]]; then
+            echo "File $file2 is not an absolute path."
+            exit 1
+        fi
 
-        if [ ! -f \$file2 ]; then
-            echo "File \$file2 does not exist."
+        if [ ! -f $file2 ]; then
+            echo "File $file2 does not exist."
             exit 1
         fi
     fi
