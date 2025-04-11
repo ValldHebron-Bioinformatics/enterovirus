@@ -78,6 +78,7 @@ process GETBLASTNMATCH {
     mkdir -p $outputDir/results
     cp $outputDir/ev-match.fasta $outputDir/results/ev-match.fasta
     cp $outputDir/species-assignment.csv $outputDir/results/species-assignment.csv
+    cp $outputDir/sample-mutations.csv $outputDir/results/sample-mutations.csv
     """
 }
 
