@@ -17,11 +17,12 @@ process CREATEDIR {
     """
     #!/bin/bash
     outputDir=$params.workdir/$params.user/$sampleId/
+    fastqDir=\$outputDir/fastq
     mkdir -p \$outputDir
 
     if [[ $file1 == *.fastq.gz ]]; then
-        extension="fastq.gz"
-        if [[ $params.fileType == "fastA" ]]; then
+        extension="fastq"
+        if [[ $params.fileType == "fasta" ]]; then
             echo "File $file1 is in FASTQ format, but the input file type is set to FASTA."
             exit 1
         fi
@@ -53,6 +54,12 @@ process CREATEDIR {
         exit 1
     fi
 
+    # Create fastq directory if extension is fastq
+    if [[ \$extension == "fastq" ]]; then
+        mkdir -p \$fastqDir
+        ln -s $file1 \$fastqDir/
+    fi
+
     # Check if second file is not '-'
     if [ "$file2" != "-" ]; then
         # Check file2 path is absolute
@@ -63,6 +70,13 @@ process CREATEDIR {
 
         if [ ! -f $file2 ]; then
             echo "File $file2 does not exist."
+            exit 1
+        fi
+        ln -s $file2 \$fastqDir/
+
+    else
+        if [[ \$extension == "fastq" ]]; then
+            echo "File $file2 is not provided, but the input file type is set to FASTQ."
             exit 1
         fi
     fi
