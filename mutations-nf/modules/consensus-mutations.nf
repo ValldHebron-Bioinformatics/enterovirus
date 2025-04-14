@@ -12,7 +12,7 @@ process INPUT_PREPARATION1 {
     """
     DIR_SAMPLE=${out_path}
 
-    gt=\$(grep ">" ${VP1cons} | tr -d '>' | cut -d\$'_' -f2 | tr -d '-')
+    gt=\$(grep ">" ${VP1cons} | tr -d '>' | cut -d\$'_' -f2)
 
     grep "\$gt" ${EVref} | tr -d '>' > name.txt
 
