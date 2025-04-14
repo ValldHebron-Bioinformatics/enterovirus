@@ -10,6 +10,7 @@ for i in range(len(sys.argv)):
         out_dir = sys.argv[i + 1]
     elif sys.argv[i] == '--annotate':
         a_file = sys.argv[i + 1]
+    elif sys.argv[i] == "--sample_name": sample_name = sys.argv[i+1]
 
 df_muts_ALL = pd.read_csv(muts_file, sep=';')
 
@@ -136,4 +137,4 @@ for i in annot_m.Aa_change:
 
 
 # print(df_muts_ALL)
-df_muts_ALL.to_csv(out_dir + '/' + 'Annotated_mutations.csv', sep=';', index=False)
+df_muts_ALL.to_csv(out_dir + '/' + f'Annotated_mutations_{sample_name}.csv', sep=';', index=False)
