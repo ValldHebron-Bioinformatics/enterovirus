@@ -106,6 +106,7 @@ process FILTHOST {
     /**
     Filtrado de host reads
     */
+    publishDir "$outputDir/fastq", pattern: '*_host_removed_R*.fastq.gz', mode: 'copy'
     
     input:
     tuple val(sampleId), path(fastq1), path(fastq2), val(outputDir)
@@ -131,7 +132,7 @@ process TRIMPRIMERSR {
     tuple val(sampleId), path('*R1_clean_r.fastq.gz'), path('*R2_clean_r.fastq.gz'), val(outputDir), path(primers)
     """
     #!/bin/bash  
-    $params.programs.bbduk in1=$fastq1 in2=$fastq2 out1=${sample}_R1_clean_r.fastq.gz out2=${sample}_R2_clean_r.fastq.gz ref=$primers k=15 ktrim=r restrictright=30
+    $params.programs.bbduk in1=$fastq1 in2=$fastq2 out1=${sampleId}_R1_clean_r.fastq.gz out2=${sampleId}_R2_clean_r.fastq.gz ref=$primers k=15 ktrim=r restrictright=30
     """
 }
 
@@ -139,7 +140,6 @@ process TRIMPRIMERSL {
     /**
     Filtrado de primers
     */
-    publishDir "$outputDir/fastq", pattern: '*_clean.fastq.gz', mode: 'copy'
     
     input:
     tuple val(sampleId), path(fastq1), path(fastq2), val(outputDir), path(primers)
@@ -151,5 +151,3 @@ process TRIMPRIMERSL {
     $params.programs.bbduk in1=${sampleId}_R1_clean_r.fastq.gz in2=${sampleId}_R2_clean_r.fastq.gz out1=${sampleId}_R1_clean.fastq.gz out2=${sampleId}_R2_clean.fastq.gz ref=$primers k=15 ktrim=l restrictleft=30
     """
 }
-
-

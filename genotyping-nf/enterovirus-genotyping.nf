@@ -61,16 +61,16 @@ workflow {
     if (params.fileType == 'fastq')
     {
         fastq_qc_ch = QUALCONTROL(dir_ch)
-        filt_host_ch = FILTHOST(fastq_qc_ch)
         if (params.primers) {
             primers = Channel.of(params.primers)
-            trimr_primers_ch = TRIMPRIMERSR(filt_host_ch.combine(primers))
-            triml_primers_ch = TRIMPRIMERSL(trimr_primers_ch)
-            spades_input_ch = triml_primers_ch
+            trimr_primers_ch = TRIMPRIMERSR(fastq_qc_ch.combine(primers))
+            filthost_input_ch = TRIMPRIMERSL(trimr_primers_ch)
+            spades_input_ch = FILTHOST(filthost_input_ch)
         }
         else {
-            spades_input_ch = filt_host_ch
+            spades_input_ch = FILTHOST(fastq_qc_ch)
         }
+
         processed_samples_ch = SPADES(spades_input_ch)
 
     }
