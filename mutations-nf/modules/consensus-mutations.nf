@@ -3,7 +3,7 @@
 process INPUT_PREPARATION1 {
     errorStrategy 'terminate'
     input:
-    tuple path(out_path), val(prot), path(VP1cons), path(EVref)
+    tuple path(out_path), val(prot), path(VP1cons), path(EVref), val(genotype)
 
     output:
     tuple file("ref_*.fasta"), file("cons_VP1.fasta")
@@ -12,21 +12,13 @@ process INPUT_PREPARATION1 {
     """
     DIR_SAMPLE=${out_path}
 
-    gt=\$(grep ">" ${VP1cons} | tr -d '>' | cut -d\$'_' -f2)
-
-    grep "\$gt" ${EVref} | tr -d '>' > name.txt
-
-    # Check if the reference file is empty
-    #if [ ! -s name.txt ]; then
-    #    echo "Reference file is empty. Exiting."
-    #    exit 1
-    #fi
+    grep "$genotype" ${EVref} | tr -d '>' > name.txt
     
-    seqtk subseq ${EVref} name.txt > "ref_\${gt}.fasta"; rm name.txt
+    seqtk subseq ${EVref} name.txt > "ref_${genotype}.fasta"; rm name.txt
 
     cp ${VP1cons} cons_VP1.fasta
     cat cons_VP1.fasta
-    cat ref_\${gt}.fasta
+    cat ref_${genotype}.fasta
     """
 }
 
@@ -56,7 +48,7 @@ process FIND_MUTATIONS {
     errorStrategy 'terminate'
     publishDir "${out_path}/mutations", mode: 'copy', pattern: "${reference}"
     input:
-    tuple path(out_path), val(prot), path(VP1cons), path(EVref)
+    tuple path(out_path), val(prot), path(VP1cons), path(EVref), val(genotype)
     tuple file(aln_fasta), file(aln_mafft), file(reference), file(consensus)
 
     output:

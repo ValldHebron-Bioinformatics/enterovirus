@@ -14,7 +14,8 @@ Channel
         tuple(file(row.SAMPLE_DIR),
         row.prot,
         file(row.VP1consensus),
-        file(row.EVreference))
+        file(row.EVreference),
+        val(row.genotype))
     }
     .set { inputs }
 
