@@ -18,7 +18,6 @@ Channel
     }
     .set { inputs }
 
-
 workflow MUTATIONS_CONSENSUS { 
 
     fstStep = INPUT_PREPARATION1(inputs)
@@ -41,4 +40,3 @@ workflow {
         MUTATIONS_CONSENSUS()
     }
 }
-
