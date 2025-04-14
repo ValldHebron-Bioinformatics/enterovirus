@@ -11,16 +11,8 @@ process INPUT_PREPARATION1 {
     script:
     """
     DIR_SAMPLE=${out_path}
-    if [[ -s \${DIR_SAMPLE}/results/species-assignment.csv ]]; then
-        gt=\$(python3 -c "import pandas as pd;df = pd.read_csv('\${DIR_SAMPLE}/results/species-assignment.csv', sep=',');print(df.genotype.to_list())")
-        if [[ \$gt == "[nan]" ]]; then
-            gt=\$(grep ">" ${VP1cons} | tr -d '>' | cut -d\$'_' -f2 | tr -d '-')
-            # gt=\$(echo ${VP1cons} | cut -d\$'_' -f1 | tr -d '-')
-        fi
-    else
-        gt=\$(grep ">" ${VP1cons} | tr -d '>' | cut -d\$'_' -f2 | tr -d '-')
-        # gt=\$(echo ${VP1cons} | cut -d\$'_' -f1 | tr -d '-')
-    fi
+
+    gt=\$(grep ">" ${VP1cons} | tr -d '>' | cut -d\$'_' -f2 | tr -d '-')
 
     grep "\$gt" ${EVref} | tr -d '>' > name.txt
 
