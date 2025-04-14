@@ -30,9 +30,9 @@ process INPUT_PREPARATION1 {
     #    exit 1
     #fi
     
-    seqtk subseq ${EVref} name.txt > ref_\${gt}.fasta; rm name.txt
+    seqtk subseq ${EVref} name.txt > "ref_\${gt}.fasta"; rm name.txt
 
-    mv ${VP1cons} cons_VP1.fasta
+    cp ${VP1cons} cons_VP1.fasta
     cat cons_VP1.fasta
     cat ref_\${gt}.fasta
     """
