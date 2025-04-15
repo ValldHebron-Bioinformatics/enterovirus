@@ -58,7 +58,7 @@ process FIND_MUTATIONS {
     cat ${reference}
     cat ${consensus}
 
-    python3 $params.programs.muts --ref_seq ${reference} --consensus_seq ${consensus} --sample_name ${out_path.baseName}_${genotype} --out_csv \$RESULTS_DIR/mutations_${prot}_\${consensus_name}.csv --prot_name ${prot}
-    python3 $params.programs.annotator --out_dir \$RESULTS_DIR --annotate ${params.project_data}/metadata/annotate.csv --sample_name \$consensus_name --muts_file \$RESULTS_DIR/mutations_${prot}_\${consensus_name}.csv 
+    python3 $params.programs.muts --ref_seq ${reference} --consensus_seq ${consensus} --sample_name ${out_path.baseName}_${genotype} --out_csv \$RESULTS_DIR/mutations_${prot}_${genotype}.csv --prot_name ${prot}
+    python3 $params.programs.annotator --out_dir \$RESULTS_DIR --annotate ${params.project_data}/metadata/annotate.csv --sample_name ${out_path.baseName}_${genotype} --muts_file \$RESULTS_DIR/mutations_${prot}_${genotype}.csv 
     """
 }
