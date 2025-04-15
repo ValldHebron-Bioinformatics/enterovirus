@@ -10,8 +10,6 @@ process INPUT_PREPARATION1 {
 
     script:
     """
-    DIR_SAMPLE=${out_path}
-
     grep "$genotype" ${EVref} | tr -d '>' > name.txt
     
     seqtk subseq ${EVref} name.txt > "ref_${genotype}.fasta"; rm name.txt
@@ -60,9 +58,7 @@ process FIND_MUTATIONS {
     cat ${reference}
     cat ${consensus}
 
-    consensus_name=\$(grep ">" ${VP1cons} | tr -d '>' | cut -d\$'_' -f1)
-
-    python3 $params.programs.muts --ref_seq ${reference} --consensus_seq ${consensus} --sample_name \$consensus_name --out_csv \$RESULTS_DIR/mutations_${prot}_\${consensus_name}.csv --prot_name ${prot}
+    python3 $params.programs.muts --ref_seq ${reference} --consensus_seq ${consensus} --sample_name ${out_path.baseName}_${genotype} --out_csv \$RESULTS_DIR/mutations_${prot}_\${consensus_name}.csv --prot_name ${prot}
     python3 $params.programs.annotator --out_dir \$RESULTS_DIR --annotate ${params.project_data}/metadata/annotate.csv --sample_name \$consensus_name --muts_file \$RESULTS_DIR/mutations_${prot}_\${consensus_name}.csv 
     """
 }

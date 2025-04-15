@@ -31,14 +31,14 @@ process VIRAL_POPULATION {
         exit 1
     fi
 
-    nextflow run $params.programs.mMf --out_path \${PWD}/$out_path --r1 \$R1 --r2 \$R2 --syn_muts "no" --ref_seq ${ref_seq} --annotate ${params.project_data}/metadata/annotate.tsv
-    MUT_FILE=\${PWD}/$out_path/mutations/${out_path.baseName}_mutations.csv --threads $params.threads
-    ANNOT_FILE=\${PWD}/$out_path/mutations/Annotated_mutations_\${SAMPLE}.csv
+    nextflow run $params.programs.mMf --out_path \${PWD}/${out_path.baseName}_${genotype} --r1 \$R1 --r2 \$R2 --syn_muts "no" --ref_seq ${ref_seq} --annotate ${params.project_data}/metadata/annotate.tsv --threads $params.threads
+    MUT_FILE=\${PWD}/${out_path.baseName}_${genotype}/mutations/${out_path.baseName}_${genotype}_mutations.csv
+    ANNOT_FILE=\${PWD}/${out_path.baseName}/mutations/Annotated_mutations_\${SAMPLE}_${genotype}.csv
     if (grep -q "Annotated_mutation" \$MUT_FILE); then
         cp \$MUT_FILE \$ANNOT_FILE
         cut -d\$';' -f1,2,3,4,5,6,7,8 \$ANNOT_FILE > \$MUT_FILE
-        cp \$ANNOT_FILE \${PWD}/$out_path/results/Annotated_mutations_\${SAMPLE}.csv
+        cp \$ANNOT_FILE \${PWD}/$out_path/results/Annotated_mutations_\${SAMPLE}_${genotype}.csv
     fi
-    cp \$MUT_FILE \${PWD}/$out_path/results/mutations_${prot}.csv
+    cp \$MUT_FILE \${PWD}/$out_path/results/mutations_${prot}_${genotype}.csv
     """
 }
