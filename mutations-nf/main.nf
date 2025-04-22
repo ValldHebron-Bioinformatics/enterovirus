@@ -9,10 +9,15 @@ include { VIRAL_POPULATION } from './modules/viral-population'
 // Workflow
 Channel
     .fromPath( params.file )
-    .splitCsv( header: false, sep: ';' )
-    .map { row -> tuple( row[0], row[1], row[2], row[3] ) }
+    .splitCsv( header: true, sep: ',' )
+    .map { row -> 
+        tuple(file(row.SAMPLE_DIR),
+        row.prot,
+        file(row.VP1consensus),
+        file(row.EVreference),
+        row.genotype)
+    }
     .set { inputs }
-
 
 workflow MUTATIONS_CONSENSUS { 
 
@@ -36,4 +41,3 @@ workflow {
         MUTATIONS_CONSENSUS()
     }
 }
-

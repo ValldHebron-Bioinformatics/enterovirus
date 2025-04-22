@@ -11,7 +11,7 @@ for i in range (len(sys.argv)):
     elif sys.argv[i] == "--pwd": pwd = sys.argv[i+1]
 
 
-results = pd.DataFrame(columns=['SAMPLE_DIR', 'prot','VP1consensus','EVreference'])
+results = pd.DataFrame(columns=['SAMPLE_DIR', 'prot','VP1consensus','EVreference', "genotype"])
 speciesTypedf = pd.read_csv(refs, sep=';')
 speciesType = dict(zip(speciesTypedf['type'], speciesTypedf['species']))
 blastndf = pd.read_csv(dirpath+'/species-assignment.csv', sep=',')
@@ -33,8 +33,9 @@ for _, row in diamonddf.iterrows():
     seq_id = row[0]  # Sequence ID
     start = row[4] - row[6]  # Adjusted start position
     end = row[5]  # Adjusted end position
-    
-    blastndf.loc[blastndf['seq'] == seq_id, 'genotype'] = row[1].split('_')[1]
+
+    genotype = row[1].split('_')[1]
+    blastndf.loc[blastndf['seq'] == seq_id, 'genotype'] = genotype
 
     # Extract protein sequence
     if seq_id in protein_sequences:
@@ -50,7 +51,7 @@ for _, row in diamonddf.iterrows():
     elif speciesType[row[1].split('_')[1]] == "Enterovirus betacoxsackie": sp = "EV-B_reference-VP1_nucleotide.fasta"
     elif speciesType[row[1].split('_')[1]] == "Enterovirus coxsackiepol": sp = "EV-C_reference-VP1_nucleotide.fasta"
     elif speciesType[row[1].split('_')[1]] == "Enterovirus deconjuncti": sp = "EV-D_reference-VP1_nucleotide.fasta"
-    results.loc[len(results)] = [pwd+dirpath, 'VP1', pwd+dirpath+"/"+seq_id+".fasta", pwd+"files/vp1-db/"+sp]
+    results.loc[len(results)] = [dirpath, 'VP1', dirpath+"/"+seq_id+".fasta", pwd+"/"+sp, genotype]
 
 # Close output files
 prot_output.close()
