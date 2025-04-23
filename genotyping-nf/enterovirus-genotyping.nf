@@ -2,9 +2,9 @@
 
 nextflow.enable.dsl = 2
 
-include { CREATEDIR; QUALCONTROL; FILTHOST; TRIMPRIMERSR; TRIMPRIMERSL; GETEVREADS} from './modules/quality-control'
-include { SPADES                                                                  } from './modules/assembly'
-include { BLASTN; GETBLASTNMATCH; GETCDS; DIAMOND; GENOTYPEVP1                    } from './modules/genotyping'
+include { CREATEDIR; QUALCONTROL; FILTHOST; TRIMPRIMERSR; TRIMPRIMERSL; GETEVREADS } from './modules/quality-control'
+include { SPADES                                                                   } from './modules/assembly'
+include { BLASTN; GETBLASTNMATCH; GETCDS; DIAMOND; GENOTYPEVP1                     } from './modules/genotyping'
 
 // Checking user-defined parameters
 if (params.protocol != "complete" && params.protocol != "partial") {
