@@ -99,6 +99,11 @@ process QUALCONTROL {
     """
     #!/bin/bash
     trimmomatic PE -threads $params.threads $fastq1 $fastq2 $output LEADING:30 TRAILING:30 SLIDINGWINDOW:10:30
+    count1=\$(zcat $fastq1 | wc -l); count1=\$((count1 / 4))
+    count2=\$(zcat $fastq2 | wc -l); count2=\$((count2 / 4))
+    touch $outputDir/results/qc-metrics.csv
+    echo "total_r1_reads;\$count1" >> $outputDir/results/qc-metrics.csv
+    echo "total_r2_reads;\$count2" >> $outputDir/results/qc-metrics.csv
     """
 }
 
@@ -117,6 +122,14 @@ process FILTHOST {
     #!/bin/bash  
     bowtie2 -p $params.threads -x $params.references.refHuman -1 $fastq1 -2 $fastq2 --un-conc-gz ${sampleId}_host_removed > ${sampleId}_host_mapped_and_unmapped.sam
     mv ${sampleId}_host_removed.1 ${sampleId}_host_removed_R1.fastq.gz; mv ${sampleId}_host_removed.2 ${sampleId}_host_removed_R2.fastq.gz
+    count1=\$(zcat $fastq1 | wc -l); count1=\$((count1 / 4))
+    count2=\$(zcat $fastq2 | wc -l); count2=\$((count2 / 4))
+    echo "paired-qc_r1_reads;\$count1" >> $outputDir/results/qc-metrics.csv
+    echo "paired-qc_r2_reads;\$count2" >> $outputDir/results/qc-metrics.csv
+    count1=\$(zcat ${sample}_host_removed_R1.fastq.gz | wc -l); count1=\$((count1 / 4))
+    count2=\$(zcat ${sample}_host_removed_R2.fastq.gz | wc -l); count2=\$((count2 / 4))
+    echo "non-human_r1_reads;\$count1" >> $outputDir/results/qc-metrics.csv
+    echo "non-human_r2_reads;\$count2" >> $outputDir/results/qc-metrics.csv
     """
 }
 
@@ -151,3 +164,29 @@ process TRIMPRIMERSL {
     $params.programs.bbduk in1=${sampleId}_R1_clean_r.fastq.gz in2=${sampleId}_R2_clean_r.fastq.gz out1=${sampleId}_R1_clean.fastq.gz out2=${sampleId}_R2_clean.fastq.gz ref=$primers k=15 ktrim=l restrictleft=30
     """
 }
+
+process GETEVREADS {
+    /**
+    Determinar reads de EV en muestra
+    */
+    
+    input:
+    tuple val(sampleId), val(fastq1), val(fastq2), val(outputDir)
+    val(dirFASTA)
+    """
+    #!/bin/bash  
+    mkdir $outputDir/tmp
+    cp $outputDir/results/ev-match.fasta $outputDir/tmp/ev-match.fasta
+    bowtie2-build $outputDir/tmp/ev-match.fasta $outputDir/tmp/ev-match
+    bowtie2 -p 24 -x $outputDir/tmp/ev-match -1 $fastq1 -2 $fastq2 --al-conc-gz ${sampleId}_mapped > ${sampleId}_mapped_and_unmapped.sam
+    mv ${sampleId}_mapped.1 ${sampleId}_mapped_R1.fastq.gz; mv ${sampleId}_mapped.2 ${sampleId}_mapped_R2.fastq.gz
+    count1=\$(zcat ${sampleId}_mapped_R1.fastq.gz | wc -l); count1=\$((count1 / 4))
+    count2=\$(zcat ${sampleId}_mapped_R2.fastq.gz | wc -l); count2=\$((count2 / 4))
+    echo "ev-r1_reads;\$count1" >> $outputDir/results/qc-metrics.csv
+    echo "ev-r2_reads;\$count2" >> $outputDir/results/qc-metrics.csv
+    """
+}
+
+
+
+
