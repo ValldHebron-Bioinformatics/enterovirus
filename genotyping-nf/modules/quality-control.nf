@@ -99,6 +99,11 @@ process QUALCONTROL {
     """
     #!/bin/bash
     trimmomatic PE -threads $params.threads $fastq1 $fastq2 $output LEADING:30 TRAILING:30 SLIDINGWINDOW:10:30
+    count1=\$(zcat $fastq1 | wc -l); count1=\$((count1 / 4))
+    count2=\$(zcat $fastq2 | wc -l); count2=\$((count2 / 4))
+    touch $outputDir/results/fastq-metrics.csv
+    echo "total_r1_reads;\$count1" >> $outputDir/results/fastq-metrics.csv
+    echo "total_r2_reads;\$count2" >> $outputDir/results/fastq-metrics.csv
     """
 }
 
@@ -117,6 +122,14 @@ process FILTHOST {
     #!/bin/bash  
     bowtie2 -p $params.threads -x $params.references.refHuman -1 $fastq1 -2 $fastq2 --un-conc-gz ${sampleId}_host_removed > ${sampleId}_host_mapped_and_unmapped.sam
     mv ${sampleId}_host_removed.1 ${sampleId}_host_removed_R1.fastq.gz; mv ${sampleId}_host_removed.2 ${sampleId}_host_removed_R2.fastq.gz
+    count1=\$(zcat $fastq1 | wc -l); count1=\$((count1 / 4))
+    count2=\$(zcat $fastq2 | wc -l); count2=\$((count2 / 4))
+    echo "paired-qc_r1_reads;\$count1" >> $outputDir/results/fastq-metrics.csv
+    echo "paired-qc_r2_reads;\$count2" >> $outputDir/results/fastq-metrics.csv
+    count1=\$(zcat ${sample}_host_removed_R1.fastq.gz | wc -l); count1=\$((count1 / 4))
+    count2=\$(zcat ${sample}_host_removed_R2.fastq.gz | wc -l); count2=\$((count2 / 4))
+    echo "non-human_r1_reads;\$count1" >> $outputDir/results/fastq-metrics.csv
+    echo "non-human_r2_reads;\$count2" >> $outputDir/results/fastq-metrics.csv
     """
 }
 
