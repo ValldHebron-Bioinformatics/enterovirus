@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl = 2
 
-include { CREATEDIR; QUALCONTROL; FILTHOST; TRIMPRIMERSR; TRIMPRIMERSL } from './modules/quality-control'
+include { CREATEDIR; QUALCONTROL; FILTHOST; TRIMPRIMERSR; TRIMPRIMERSL; GETEVREADS} from './modules/quality-control'
 include { SPADES                                                                  } from './modules/assembly'
 include { BLASTN; GETBLASTNMATCH; GETCDS; DIAMOND; GENOTYPEVP1                    } from './modules/genotyping'
 
@@ -85,4 +85,7 @@ workflow {
     get_cds_ch = GETCDS(get_match_ch)
     prot_match_ch = DIAMOND(get_cds_ch)
     vp1_ch = GENOTYPEVP1(prot_match_ch)
+    if (params.input == "fastq") {
+    	ev_ch = GETEVREADS(spades_input_ch, get_match_ch)
+    }
 }
