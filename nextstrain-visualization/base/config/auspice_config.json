@@ -1,0 +1,64 @@
+{
+  "title": "Genomic epidemiology of < EV >",
+  "maintainers": [
+    {
+      "name": "Respiratory Virus Unit from Vall d'Hebron University Hospital",
+      "url": "https://www.vallhebron.com/"
+    }
+  ],
+  "colorings": [
+    {
+      "key": "gt",
+      "title": "Subgenotype",
+      "type": "categorical"
+    }, 
+    {
+      "key": "num_date",
+      "title": "Date",
+      "type": "continuous"
+    },
+    {
+      "key": "country",
+      "title": "Country",
+      "type": "categorical"
+    },
+    {
+      "key": "region",
+      "title": "Global Regions",
+      "type": "categorical"
+    }
+  ],
+  "geo_resolutions": [
+    {
+      "key": "country",
+      "title": "Country"
+    },
+    {
+      "key": "city",
+      "title": "City"
+    },
+    {
+      "key": "region",
+      "title": "Global Regions"
+    }
+  ],
+  "panels": [
+    "tree",
+    "map",
+    "entropy"
+  ],
+  "display_defaults": {
+    "color_by": "country",
+    "geo_resolution": "country",
+    "distance_measure": "num_date",
+    "tip_label": "strain",
+    "map_triplicate": true
+  },
+  "metadata_columns": [
+    "strain"
+  ],
+  "filters": [
+    "country",
+    "region"
+  ]
+}
