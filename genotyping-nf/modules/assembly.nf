@@ -35,3 +35,45 @@ process SPADES {
     fi
     """
 }
+
+
+process NREPLACER {
+    /**
+    Reemplazo por N en las posiciones con menos de 20x
+    */
+
+    input:
+    tuple val(sampleId), val(fastq1), val(fastq2), val(outputDir)
+    val(dirFASTA)
+
+    output:
+    val(outputDir)
+
+    script:
+    """
+    #!/bin/bash
+    minimap2 -ax sr ${outputDir}/results/ev-match.fasta $fastq1 $fastq2 > ${outputDir}/tmp/reads-mapped-consensus.sam
+    samtools view -bS ${outputDir}/tmp/reads-mapped-consensus.sam | samtools sort - -o ${outputDir}/tmp/reads-mapped-consensus.bam
+    echo -e "ref;pos;depth" > ${outputDir}/tmp/depth-consensus.tsv
+    samtools depth -a ${outputDir}/tmp/reads-mapped-consensus.bam >> ${outputDir}/tmp/depth-consensus.tsv
+    sed -i -z 's/\t/;/g' ${outputDir}/tmp/depth-consensus.tsv
+    python3 $params.programs.Nreplacer --fasta ${outputDir}/results/ev-match.fasta --coverage ${outputDir}/tmp/depth-consensus.tsv
+    EVmatch=${outputDir}/results/ev-match.fasta
+    """
+}
+
+process ASSEMBLYMETRICS {
+    /**
+    obtener metricas de ensamblado
+    */
+
+    input:
+    val(outputDir)
+
+    script:
+    """
+    #!/bin/bash
+    touch ${outputDir}/results/assembly-metrics.csv
+    python3 $params.programs.qualitymetrics --fasta ${outputDir}/results/ev-match.fasta --csv ${outputDir}/results/assembly-metrics.csv
+    """
+}

@@ -3,7 +3,7 @@
 nextflow.enable.dsl = 2
 
 include { CREATEDIR; QUALCONTROL; FILTHOST; TRIMPRIMERSR; TRIMPRIMERSL; GETEVREADS } from './modules/quality-control'
-include { SPADES                                                                   } from './modules/assembly'
+include { SPADES; NREPLACER; ASSEMBLYMETRICS                                                                   } from './modules/assembly'
 include { BLASTN; GETBLASTNMATCH; GETCDS; DIAMOND; GENOTYPEVP1                     } from './modules/genotyping'
 
 // Checking user-defined parameters
@@ -87,5 +87,12 @@ workflow {
     vp1_ch = GENOTYPEVP1(prot_match_ch)
     if (params.input == "fastq") {
     	ev_ch = GETEVREADS(spades_input_ch, get_match_ch)
-    }
+        nreplaced_ch = NREPLACER(spades_input_ch, get_match_ch)
+        assembly_ch = ASSEMBLYMETRICS(nreplaced_ch)
+    } 
+    //else { // TO DO: Integrarlo con el formato de entrada FASTA.
+    // se le debe dar de input el directorio donde este el análisis, ya que va a buscar
+    // el archivo ${dirSample}/results/ev-match.fasta
+        // assembly_ch = ASSEMBLYMETRICS([params.dirFasta])
+    //}
 }
