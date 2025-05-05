@@ -1,5 +1,5 @@
 #!/usr/bin/env nextflow
-
+nextflow.enable.dsl = 2
 process INPUT_PREPARATION1 {
     errorStrategy 'terminate'
     input:
@@ -10,9 +10,12 @@ process INPUT_PREPARATION1 {
 
     script:
     """
-    grep "$genotype" ${EVref} | tr -d '>' > name.txt
+    #!/bin/bash
+    gt=\$(echo $genotype | sed -e 's/-/_/g' -e 's/(/_/g' -e 's/)//g')
+    ref=${EVref}
+    grep "\$gt" \$ref | tr -d '>' > name.txt
     
-    seqtk subseq ${EVref} name.txt > "ref_${genotype}.fasta"; rm name.txt
+    seqtk subseq \$ref name.txt > "ref_${genotype}.fasta"; rm name.txt
 
     cp ${VP1cons} cons_VP1.fasta
     cat cons_VP1.fasta

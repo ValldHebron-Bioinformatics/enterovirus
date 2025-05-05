@@ -3,8 +3,7 @@
 nextflow.enable.dsl = 2
 
 include { INPUT_PREPARATION1; INPUT_PREPARATION2; FIND_MUTATIONS } from './modules/consensus-mutations'
-include { VIRAL_POPULATION } from './modules/viral-population'
-
+include { VIRAL_POPULATION                                       } from './modules/viral-population'
 
 // Workflow
 Channel

@@ -1,4 +1,5 @@
 #!/usr/bin/env nextflow
+nextflow.enable.dsl = 2
 
 process VIRAL_POPULATION {
     errorStrategy 'terminate'
@@ -13,7 +14,7 @@ process VIRAL_POPULATION {
     script:
     """
     DIR_SAMPLE=${out_path}
-    FASTQ=${out_path}/fastq
+    FASTQ=\${PWD}/${out_path}/fastq
     SAMPLE=${out_path.baseName}
     if [[ -d \$FASTQ ]]; then
         if [[ -s \$FASTQ/"\$SAMPLE"_R1_clean.fastq.gz ]]; then
@@ -31,7 +32,7 @@ process VIRAL_POPULATION {
         exit 1
     fi
 
-    nextflow run $params.programs.mMf --out_path \${PWD}/${out_path.baseName}_${genotype} --r1 \$R1 --r2 \$R2 --syn_muts "no" --ref_seq ${ref_seq} --annotate ${params.project_data}/metadata/annotate.tsv --threads $params.threads
+    nextflow run $params.programs.mMf --out_path \${PWD}/${out_path.baseName}_${genotype} --r1 \$R1 --r2 \$R2 --syn_muts "no" --ref_seq ${ref_seq} --annotate ${params.project_data}/metadata/annotate.tsv --threads $params.threads -resume
     MUT_FILE=\${PWD}/${out_path.baseName}_${genotype}/mutations/${out_path.baseName}_${genotype}_mutations.csv
     ANNOT_FILE=\${PWD}/${out_path.baseName}/mutations/Annotated_mutations_\${SAMPLE}_${genotype}.csv
     if (grep -q "Annotated_mutation" \$MUT_FILE); then

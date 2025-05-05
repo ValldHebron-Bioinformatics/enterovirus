@@ -80,6 +80,7 @@ process CREATEDIR {
             exit 1
         fi
     fi
+    mkdir -p \$outputDir/results
     """
 }
 
@@ -118,6 +119,8 @@ process FILTHOST {
 
     output:
     tuple val(sampleId), path('*_host_removed_R1.fastq.gz'), path('*_host_removed_R2.fastq.gz'), val(outputDir)
+    
+    script:
     """
     #!/bin/bash  
     bowtie2 -p $params.threads -x $params.references.refHuman -1 $fastq1 -2 $fastq2 --un-conc-gz ${sampleId}_host_removed > ${sampleId}_host_mapped_and_unmapped.sam
@@ -126,8 +129,8 @@ process FILTHOST {
     count2=\$(zcat $fastq2 | wc -l); count2=\$((count2 / 4))
     echo "paired-qc_r1_reads;\$count1" >> $outputDir/results/qc-metrics.csv
     echo "paired-qc_r2_reads;\$count2" >> $outputDir/results/qc-metrics.csv
-    count1=\$(zcat ${sample}_host_removed_R1.fastq.gz | wc -l); count1=\$((count1 / 4))
-    count2=\$(zcat ${sample}_host_removed_R2.fastq.gz | wc -l); count2=\$((count2 / 4))
+    count1=\$(zcat ${sampleId}_host_removed_R1.fastq.gz | wc -l); count1=\$((count1 / 4))
+    count2=\$(zcat ${sampleId}_host_removed_R2.fastq.gz | wc -l); count2=\$((count2 / 4))
     echo "non-human_r1_reads;\$count1" >> $outputDir/results/qc-metrics.csv
     echo "non-human_r2_reads;\$count2" >> $outputDir/results/qc-metrics.csv
     """
@@ -143,6 +146,8 @@ process TRIMPRIMERSR {
     
     output:
     tuple val(sampleId), path('*R1_clean_r.fastq.gz'), path('*R2_clean_r.fastq.gz'), val(outputDir), path(primers)
+    
+    script:
     """
     #!/bin/bash  
     $params.programs.bbduk in1=$fastq1 in2=$fastq2 out1=${sampleId}_R1_clean_r.fastq.gz out2=${sampleId}_R2_clean_r.fastq.gz ref=$primers k=15 ktrim=r restrictright=30
@@ -159,6 +164,8 @@ process TRIMPRIMERSL {
     
     output:
     tuple val(sampleId), path('*R1_clean.fastq.gz'), path('*R2_clean.fastq.gz'), val(outputDir)
+
+    script:
     """
     #!/bin/bash  
     $params.programs.bbduk in1=${sampleId}_R1_clean_r.fastq.gz in2=${sampleId}_R2_clean_r.fastq.gz out1=${sampleId}_R1_clean.fastq.gz out2=${sampleId}_R2_clean.fastq.gz ref=$primers k=15 ktrim=l restrictleft=30
@@ -173,6 +180,8 @@ process GETEVREADS {
     input:
     tuple val(sampleId), val(fastq1), val(fastq2), val(outputDir)
     val(dirFASTA)
+
+    script:
     """
     #!/bin/bash  
     mkdir $outputDir/tmp
