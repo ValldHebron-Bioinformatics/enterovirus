@@ -35,7 +35,7 @@ if (protocol == "complete" or inputval == "fasta"):
     with open(out_dir+"/ev-match.fasta", 'w') as outfile:
         for _, row in blastn.iterrows():
             seq_id = row[0]  # Sequence ID
-            segment = sequences[seq_id][row[4]:row[5]]
+            segment = sequences[seq_id][row[4]-1:row[5]]
             if (row[4] <= row[5]) and (row[6] <= row[7]): # plus/plus
                 outfile.write(f">{seq_id}\n{segment}\n")
                 results.loc[len(results)] = [row[1], seq_id, row[6], row[7], speciesType[row[1].split('_')[1]], '']
@@ -51,7 +51,7 @@ elif protocol == "partial":
     blastn = blastn.sort_values(['covval'], ascending=False)
     with open(out_dir+"/ev-match.fasta", 'w') as outfile:
         seq_id = blastn[0][0]
-        segment = sequences[seq_id][blastn[4][0]:blastn[5][0]]
+        segment = sequences[seq_id][blastn[4][0]-1:blastn[5][0]]
         if (blastn[4][0] <= blastn[5][0]) and (blastn[6][0] <= blastn[7][0]):
             outfile.write(f">{seq_id}\n{segment}\n")
             if speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alphacoxsackie": st = 2502
