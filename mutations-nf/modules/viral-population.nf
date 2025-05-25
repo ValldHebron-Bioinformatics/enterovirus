@@ -2,7 +2,7 @@
 nextflow.enable.dsl = 2
 
 process VIRAL_POPULATION {
-    errorStrategy 'terminate'
+    errorStrategy 'ignore'
 
     input:
     tuple path(out_path), val(prot), path(VP1cons), path(EVref), val(genotype)
@@ -32,7 +32,7 @@ process VIRAL_POPULATION {
         exit 1
     fi
 
-    nextflow run $params.programs.mMf --out_path \${PWD}/${out_path.baseName}_${genotype} --r1 \$R1 --r2 \$R2 --syn_muts "no" --ref_seq ${ref_seq} --annotate ${params.project_data}/metadata/annotate.tsv --threads $params.threads -resume
+    nextflow run $params.programs.mMf --out_path \${PWD}/${out_path.baseName}_${genotype} --r1 \$R1 --r2 \$R2 --syn_muts "no" --ref_seq ${ref_seq} --annotate ${params.project_data}/metadata/annotate.tsv --threads $params.threads --mapping bbmap
     MUT_FILE=\${PWD}/${out_path.baseName}_${genotype}/mutations/${out_path.baseName}_${genotype}_mutations.csv
     ANNOT_FILE=\${PWD}/${out_path.baseName}/mutations/Annotated_mutations_\${SAMPLE}_${genotype}.csv
     if (grep -q "Annotated_mutation" \$MUT_FILE); then

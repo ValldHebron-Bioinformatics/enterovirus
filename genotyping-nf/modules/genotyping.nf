@@ -108,7 +108,7 @@ process DIAMOND {
     script:
     """
     #!/bin/bash
-    $params.programs.diamond blastp --query $cdsFile --db $params.references.VP1dbDiamond/EV-VP1.dmnd --out $outputDir/out-diamond.txt --outfmt 6 qseqid sseqid bitscore evalue qstart qend sstart send
+    $params.programs.diamond blastp --query $cdsFile --db $params.references.VP1dbDiamond --out $outputDir/out-diamond.txt --outfmt 6 qseqid sseqid bitscore evalue qstart qend sstart send
     """
 }
 
