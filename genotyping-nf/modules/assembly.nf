@@ -74,6 +74,6 @@ process ASSEMBLYMETRICS {
     """
     #!/bin/bash
     touch ${outputDir}/results/assembly-metrics.csv
-    python3 $params.programs.qualitymetrics --fasta ${outputDir}/results/ev-match.fasta --csv ${outputDir}/results/assembly-metrics.csv
+    python3 $params.programs.qualitymetrics --fasta ${outputDir}/results/ev-match.fasta --csv ${outputDir}/results/assembly-metrics.csv --coverage ${outputDir}/tmp/depth-consensus.tsv
     """
 }
