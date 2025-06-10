@@ -95,7 +95,8 @@ workflow {
     if (params.fileType == "fastq") {
     	ev_ch = GETEVREADS(spades_input_ch, get_match_ch)
         nreplaced_ch = NREPLACER(spades_input_ch, get_match_ch)
-        assembly_ch = ASSEMBLYMETRICS(nreplaced_ch)
+        // assembly_ch = 
+        ASSEMBLYMETRICS(nreplaced_ch)
     } 
     //else { // TO DO: Integrarlo con el formato de entrada FASTA.
     // se le debe dar de input el directorio donde este el análisis, ya que va a buscar
