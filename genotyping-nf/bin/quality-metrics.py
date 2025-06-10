@@ -17,11 +17,11 @@ with open(args.csv, "a", newline = "") as csvfile:
     # Process each sequence in the FASTA file
     for record in SeqIO.parse(args.fasta, "fasta"):
         cov_record = cov_file[cov_file.ref == record.id]
-        depth_coverage = cov_record.depth.quantile([0.5]).iloc[0]
+        depth_coverage = int(cov_record.depth.quantile([0.5]).iloc[0])
         seq_length = len(record.seq)
         n_count = record.seq.upper().count("N")
         percentage_n = (n_count / seq_length) * 100
         # Write the results to the CSV file
         writer.writerow([f"{record.id}_length", seq_length])
         writer.writerow([f"{record.id}_percentageN", f"{percentage_n:.2f}%"])
-        writer.writerow([f"{record.id}_median_depth_coverage", f"{depth_coverage:.2f}x"])
+        writer.writerow([f"{record.id}_median_depth_coverage", depth_coverage])
