@@ -1,5 +1,5 @@
 {
-  "title": "Genomic epidemiology of EV-D68",
+  "title": "Genomic epidemiology of EV-D68 VP1",
   "maintainers": [
     {
       "name": "Respiratory Virus Unit from Vall d'Hebron University Hospital",
@@ -23,8 +23,8 @@
       "type": "categorical"
     },
     {
-      "key": "region",
-      "title": "Global Regions",
+      "key": "clade_membership",
+      "title": "Clade",
       "type": "categorical"
     }
   ],
@@ -36,16 +36,11 @@
     {
       "key": "city",
       "title": "City"
-    },
-    {
-      "key": "region",
-      "title": "Global Regions"
     }
   ],
   "panels": [
     "tree",
-    "map",
-    "entropy"
+    "map"
   ],
   "display_defaults": {
     "color_by": "country",
@@ -58,7 +53,6 @@
     "strain"
   ],
   "filters": [
-    "country",
-    "region"
+    "country"
   ]
 }
