@@ -112,7 +112,7 @@ process DIAMOND {
     """
 }
 
-process GENOTYPEVP1 {
+process GETVP1 {
 
     input:
     val(outputDir)
@@ -125,7 +125,24 @@ process GENOTYPEVP1 {
     #!/bin/bash
     python3 $params.programs.getVP1 --dir $outputDir --diamond $outputDir/out-diamond.txt --refs $params.references.speciesType --pwd $params.references.EVreference
     awk -v outdir=$outputDir '/^>/ {out = outdir "/" substr(\$1, 2) ".fasta"; print > out} !/^>/ {print >> out}' $outputDir/VP1_nucl.fasta
-    cp $outputDir/sample-mutations.csv $outputDir/results/sample-mutations.csv
-    cp $outputDir/species-assignment.csv $outputDir/results/species-assignment.csv
+    #cp $outputDir/sample-mutations.csv $outputDir/results/sample-mutations.csv
+    #cp $outputDir/species-assignment.csv $outputDir/results/species-assignment.csv
+    """
+}
+
+process GENOTYPEVP1 {
+
+    errorStrategy 'ignore'
+
+    input:
+    val(outputDir)
+
+    output:
+    val(outputDir)
+
+    script:
+    """
+    nextclade sort -m $params.references.VP1minimizers -r $outputDir/vp1-genotyping.tsv $outputDir/VP1_nucl.fasta
+    python3 $params.programs.genotype --dir $outputDir --sort-result $outputDir/vp1-genotyping.tsv
     """
 }

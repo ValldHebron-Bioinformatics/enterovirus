@@ -66,6 +66,8 @@ process ASSEMBLYMETRICS {
     /**
     obtener metricas de ensamblado
     */
+    
+    errorStrategy 'ignore'
 
     input:
     val(outputDir)

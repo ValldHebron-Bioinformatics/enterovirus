@@ -40,18 +40,12 @@ for _, row in diamonddf.iterrows():
     # Extract protein sequence
     if seq_id in protein_sequences:
         prot_segment = protein_sequences[seq_id][start-1:end]
-        prot_output.write(f">{seq_id}2\n{prot_segment}\n")
-        print(protein_sequences[seq_id])
-        print(prot_segment)
-        print(start)
-        print(end)
+        prot_output.write(f">{seq_id}\n{prot_segment}\n")
     
     # Extract nucleotide sequence
     if seq_id in nucleotide_sequences:
         nucl_segment = nucleotide_sequences[seq_id][start*3-3:end*3]  # Convert amino acid positions to nucleotide
-        nucl_output.write(f">{seq_id}2\n{nucl_segment}\n")
-        print(nucleotide_sequences[seq_id])
-        print(nucl_segment)
+        nucl_output.write(f">{seq_id}\n{nucl_segment}\n")
     
     if speciesType[row[1].split('_')[1]] == "Enterovirus alphacoxsackie": sp = "EV-A_reference-VP1_nucleotide_mutations.fasta"
     elif speciesType[row[1].split('_')[1]] == "Enterovirus betacoxsackie": sp = "EV-B_reference-VP1_nucleotide_mutations.fasta"
