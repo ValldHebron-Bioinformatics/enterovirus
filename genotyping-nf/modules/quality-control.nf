@@ -80,6 +80,8 @@ process CREATEDIR {
             exit 1
         fi
     fi
+
+    # Create results directory
     mkdir -p \$outputDir/results
     """
 }
