@@ -10,9 +10,10 @@ rule files:
         reference =         "config/reference_sequence.gb", ## TO DO: Provide reference genome
         auspice_config =    "config/auspice_config.json",
         input_fasta =       "data/sequences.fasta",
-        input_metadata =    "data/metadata.tsv"
+        input_metadata =    "data/metadata.tsv",
+        clades =            "config/clades.tsv" ## TO DO: Define clade
     params:
-        sequence_length =   6000, ## TO DO: Change length 
+        sequence_length =   850, ## TO DO: Change length 
 
 ## files = rules.files.input
 
@@ -57,6 +58,20 @@ rule filter:
             --min-length {params.min_length} 
         """
 
+rule reference_gb_to_fasta:
+    message:
+        """
+        Converting reference sequence from genbank to fasta format and putting it in the reference folders of your proteins
+        """
+    input:
+        reference = rules.files.input.reference
+
+    output:
+        reference = "results/reference_sequence.fasta"
+    run:
+        from Bio import SeqIO 
+        SeqIO.convert(input.reference, "genbank", output.reference, "fasta")
+
 rule align:
     message:
         """
@@ -65,16 +80,21 @@ rule align:
         """
     input:
         sequences = rules.filter.output.sequences,
-        reference = rules.files.input.reference
+        reference = rules.reference_gb_to_fasta.output.reference
     output:
         alignment = "results/aligned.fasta"
+    params:
+            nuc_mismatch_all = 10,
+            nuc_seed_length = 30
     shell:
         """
-        augur align \
-            --sequences {input.sequences} \
-            --reference-sequence {input.reference} \
-            --output {output.alignment} \
-            --fill-gaps
+        nextclade run \
+        {input.sequences}  \
+        --input-ref {input.reference}\
+        --allowed-mismatches {params.nuc_mismatch_all} \
+        --min-length {params.nuc_seed_length} \
+        --include-reference false \
+        --output-fasta {output.alignment} 
         """
 
 rule tree:
@@ -116,7 +136,7 @@ rule refine:
     params:
         coalescent = "opt",
         date_inference = "marginal",
-        clock_filter_iqd = 3, # set to 6 if you want more control over outliers
+        clock_filter_iqd = 5, # set to 6 if you want more control over outliers
 
     shell:
         """
@@ -187,9 +207,28 @@ rule traits:
         augur traits \
             --tree {input.tree} \
             --metadata {input.metadata} \
+            --metadata-id-columns strain \
             --output-node-data {output.node_data} \
             --columns {params.traits} \
             --confidence
+        """
+
+rule clades: 
+    message: "Assigning clades according to nucleotide mutations"
+    input:
+        tree = rules.refine.output.tree,
+        aa_muts = rules.translate.output.node_data,
+        nuc_muts = rules.ancestral.output.node_data,
+        clades = rules.files.input.clades # TODO: assign mutations to specific clades
+    output:
+        clade_data = "results/clades.json"
+
+    shell:
+        """
+        augur clades --tree {input.tree} \
+            --mutations {input.nuc_muts} {input.aa_muts} \
+            --clades {input.clades} \
+            --output-node-data {output.clade_data}
         """
 
 rule export:
@@ -202,6 +241,7 @@ rule export:
         nt_muts = rules.ancestral.output.node_data,
         aa_muts = rules.translate.output.node_data,
         colors = rules.files.input.colors,
+        clades = rules.clades.output.clade_data,
         lat_longs = rules.files.input.lat_longs,
         auspice_config = rules.files.input.auspice_config
 
@@ -214,7 +254,7 @@ rule export:
             --tree {input.tree} \
             --metadata {input.metadata} \
             --node-data {input.branch_lengths} {input.traits} {input.nt_muts} \
-                {input.aa_muts} \
+                {input.aa_muts} {input.clades} \
             --colors {input.colors} \
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \

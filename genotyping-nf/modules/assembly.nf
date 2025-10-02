@@ -69,6 +69,8 @@ process ASSEMBLYMETRICS {
     
     errorStrategy 'ignore'
 
+    errorStrategy 'ignore'
+
     input:
     val(outputDir)
 
