@@ -189,7 +189,7 @@ process GETEVREADS {
     mkdir $outputDir/tmp
     cp $outputDir/results/ev-match.fasta $outputDir/tmp/ev-match.fasta
     bowtie2-build $outputDir/tmp/ev-match.fasta $outputDir/tmp/ev-match
-    bowtie2 -p 24 -x $outputDir/tmp/ev-match -1 $fastq1 -2 $fastq2 --al-conc-gz ${sampleId}_mapped > ${sampleId}_mapped_and_unmapped.sam
+    bowtie2 -p $params.threads -x $outputDir/tmp/ev-match -1 $fastq1 -2 $fastq2 --al-conc-gz ${sampleId}_mapped > ${sampleId}_mapped_and_unmapped.sam
     mv ${sampleId}_mapped.1 ${sampleId}_mapped_R1.fastq.gz; mv ${sampleId}_mapped.2 ${sampleId}_mapped_R2.fastq.gz
     count1=\$(zcat ${sampleId}_mapped_R1.fastq.gz | wc -l); count1=\$((count1 / 4))
     count2=\$(zcat ${sampleId}_mapped_R2.fastq.gz | wc -l); count2=\$((count2 / 4))
