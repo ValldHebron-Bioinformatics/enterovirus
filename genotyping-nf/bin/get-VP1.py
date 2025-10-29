@@ -31,7 +31,7 @@ nucl_output = open(dirpath+"/VP1_nucl.fasta", "w")
 
 for _, row in diamonddf.iterrows():
     seq_id = row[0]  # Sequence ID
-    start = row[4] - row[6]  # Adjusted start position
+    start = row[4] # Adjusted start position
     end = row[5]  # Adjusted end position
 
     genotype = row[1].split('_')[1]
@@ -39,12 +39,12 @@ for _, row in diamonddf.iterrows():
 
     # Extract protein sequence
     if seq_id in protein_sequences:
-        prot_segment = protein_sequences[seq_id][start:end]
+        prot_segment = protein_sequences[seq_id][start-1:end]
         prot_output.write(f">{seq_id}\n{prot_segment}\n")
     
     # Extract nucleotide sequence
     if seq_id in nucleotide_sequences:
-        nucl_segment = nucleotide_sequences[seq_id][start*3:end*3]  # Convert amino acid positions to nucleotide
+        nucl_segment = nucleotide_sequences[seq_id][start*3-3:end*3]  # Convert amino acid positions to nucleotide
         nucl_output.write(f">{seq_id}\n{nucl_segment}\n")
     
     if speciesType[row[1].split('_')[1]] == "Enterovirus alphacoxsackie": sp = "EV-A_reference-VP1_nucleotide.fasta"

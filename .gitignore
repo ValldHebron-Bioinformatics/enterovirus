@@ -1,0 +1,5 @@
+./test
+./genotyping-nf/nextflow.config
+nextstrain-visualization/ev-d68/.snakemake
+nextstrain-visualization/ev-d68/data/*
+nextstrain-visualization/ev-d68/results/*
