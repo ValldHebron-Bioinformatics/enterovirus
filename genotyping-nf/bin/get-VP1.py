@@ -47,10 +47,10 @@ for _, row in diamonddf.iterrows():
         nucl_segment = nucleotide_sequences[seq_id][start*3:end*3]  # Convert amino acid positions to nucleotide
         nucl_output.write(f">{seq_id}\n{nucl_segment}\n")
     
-    if speciesType[row[1].split('_')[1]] == "Enterovirus alphacoxsackie": sp = "EV-A_reference-VP1_nucleotide_mutations.fasta"
-    elif speciesType[row[1].split('_')[1]] == "Enterovirus betacoxsackie": sp = "EV-B_reference-VP1_nucleotide_mutations.fasta"
-    elif speciesType[row[1].split('_')[1]] == "Enterovirus coxsackiepol": sp = "EV-C_reference-VP1_nucleotide_mutations.fasta"
-    elif speciesType[row[1].split('_')[1]] == "Enterovirus deconjuncti": sp = "EV-D_reference-VP1_nucleotide_mutations.fasta"
+    if speciesType[row[1].split('_')[1]] == "Enterovirus alphacoxsackie": sp = "EV-A_reference-VP1_nucleotide.fasta"
+    elif speciesType[row[1].split('_')[1]] == "Enterovirus betacoxsackie": sp = "EV-B_reference-VP1_nucleotide.fasta"
+    elif speciesType[row[1].split('_')[1]] == "Enterovirus coxsackiepol": sp = "EV-C_reference-VP1_nucleotide.fasta"
+    elif speciesType[row[1].split('_')[1]] == "Enterovirus deconjuncti": sp = "EV-D_reference-VP1_nucleotide.fasta"
     results.loc[len(results)] = [dirpath, 'VP1', dirpath+"/"+seq_id+".fasta", pwd+"/"+sp, genotype]
 
 # Close output files
