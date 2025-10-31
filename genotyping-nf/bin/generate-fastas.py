@@ -58,6 +58,9 @@ elif protocol == "partial":
             elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betacoxsackie": st = 2508
             elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus coxsackiepol": st = 2544
             elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus deconjuncti": st = 2418
+            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alpharhino": st = 2441
+            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betarhino": st = 2387
+            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus cerhino": st = 2469
             results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[6][0]+st, blastn[7][0]+st, speciesType[blastn[1][0].split('_')[1]], ''] 
         else:
             segmentrev=segment.replace("A","t").replace("C","g").replace("G","c").replace("T","a")
@@ -67,6 +70,9 @@ elif protocol == "partial":
             elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betacoxsackie": st = 2508
             elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus coxsackiepol": st = 2544
             elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus deconjuncti": st = 2418
+            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alpharhino": st = 2441
+            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betarhino": st = 2387
+            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus cerhino": st = 2469
             results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[7][0]+st, blastn[6][0]+st, speciesType[blastn[1][0].split('_')[1]], '']
 outfile.close()
 
