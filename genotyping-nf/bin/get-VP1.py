@@ -61,4 +61,4 @@ prot_output.close()
 nucl_output.close()
 
 blastndf.to_csv(dirpath+"/species-assignment.csv", index=False)
-results.to_csv(dirpath+"/sample-mutations.csv", index=False)
+results.to_csv(dirpath+"/results/sample-mutations.csv", index=False)
