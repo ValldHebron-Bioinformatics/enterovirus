@@ -30,7 +30,7 @@ prot_output = open(dirpath+"/VP1_prot.fasta", "w")
 nucl_output = open(dirpath+"/VP1_nucl.fasta", "w")
 
 for _, row in diamonddf.iterrows():
-    seq_id = row[0]  # Sequence ID
+    seq_id = str(row[0])  # Sequence ID
     start = row[4] # Adjusted start position
     end = row[5]  # Adjusted end position
 
