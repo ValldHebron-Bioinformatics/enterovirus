@@ -41,6 +41,8 @@ process NREPLACER {
     /**
     Reemplazo por N en las posiciones con menos de 20x
     */
+    errorStrategy 'retry'
+    maxRetries 2 
 
     input:
     tuple val(sampleId), val(fastq1), val(fastq2), val(outputDir)
@@ -57,6 +59,10 @@ process NREPLACER {
     echo -e "ref;pos;depth" > ${outputDir}/tmp/depth-consensus.tsv
     samtools depth -a ${outputDir}/tmp/reads-mapped-consensus.bam >> ${outputDir}/tmp/depth-consensus.tsv
     sed -i -z 's/\t/;/g' ${outputDir}/tmp/depth-consensus.tsv
+    if [[ \$(wc -l < ${outputDir}/tmp/depth-consensus.tsv) -lt 3 ]]; then
+        sleep 5
+        exit 1  
+    fi
     python3 $params.programs.Nreplacer --fasta ${outputDir}/results/ev-match.fasta --coverage ${outputDir}/tmp/depth-consensus.tsv
     EVmatch=${outputDir}/results/ev-match.fasta
     """

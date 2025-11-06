@@ -12,10 +12,11 @@ process INPUT_PREPARATION1 {
     """
     #!/bin/bash
     gt=\$(echo $genotype | sed -e 's/-/_/g' -e 's/(/_/g' -e 's/)//g')
-    ref=${EVref}
-    grep "\$gt" \$ref | tr -d '>' > name.txt
+    echo ${EVref}
+    ref=$EVref
+    grep "\$gt" ${EVref} | tr -d '>' > name.txt
     
-    seqtk subseq \$ref name.txt > "ref_${genotype}.fasta"; rm name.txt
+    seqtk subseq ${EVref} name.txt > "ref_${genotype}.fasta"; rm name.txt
 
     cp ${VP1cons} cons_VP1.fasta
     cat cons_VP1.fasta
@@ -58,7 +59,9 @@ process FIND_MUTATIONS {
     script:
     """
     RESULTS_DIR=${out_path}/results
+    echo ref
     cat ${reference}
+    echo cons
     cat ${consensus}
 
     python3 $params.programs.muts --ref_seq ${reference} --consensus_seq ${consensus} --sample_name ${out_path.baseName}_${genotype} --out_csv \$RESULTS_DIR/mutations_${prot}_${genotype}.csv --prot_name ${prot}
