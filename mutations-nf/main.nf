@@ -22,9 +22,6 @@ workflow MUTATIONS_CONSENSUS {
 
     fstStep = INPUT_PREPARATION1(inputs)
     scdStep = INPUT_PREPARATION2(fstStep)
-    fstStep.view()
-    scdStep.view()
-    inputs.view()
     FIND_MUTATIONS(inputs, scdStep)
 
 }

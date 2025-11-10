@@ -34,7 +34,7 @@ if (protocol == "complete" or inputval == "fasta"):
     # Extract from original fasta the duplicates identified and map
     with open(out_dir+"/ev-match.fasta", 'w') as outfile:
         for _, row in blastn.iterrows():
-            seq_id = row[0]  # Sequence ID
+            seq_id = str(row[0])  # Sequence ID
             segment = sequences[seq_id][row[4]-1:row[5]]
             if (row[4] <= row[5]) and (row[6] <= row[7]): # plus/plus
                 outfile.write(f">{seq_id}\n{segment}\n")
@@ -50,7 +50,7 @@ elif protocol == "partial":
     blastn.covval = pd.to_numeric(blastn.covval, errors='coerce')
     blastn = blastn.sort_values(['covval'], ascending=False)
     with open(out_dir+"/ev-match.fasta", 'w') as outfile:
-        seq_id = blastn[0][0]
+        seq_id = str(blastn[0][0])
         segment = sequences[seq_id][blastn[4][0]-1:blastn[5][0]]
         if (blastn[4][0] <= blastn[5][0]) and (blastn[6][0] <= blastn[7][0]):
             outfile.write(f">{seq_id}\n{segment}\n")
@@ -77,7 +77,6 @@ elif protocol == "partial":
         #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alpharhino": st = 2441
         #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betarhino": st = 2387
         #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus cerhino": st = 2469
-        #    results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[7][0]+st, blastn[6][0]+st, speciesType[blastn[1][0].split('_')[1]], '']
-outfile.close()
+        #    results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[7][0]+st, blastn[6][0]+st, speciesType[blastn[1][0].split('_')[1]], '']outfile.close()
 
 results.to_csv(out_dir+"/species-assignment.csv", index=False)

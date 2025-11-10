@@ -59,12 +59,9 @@ process FIND_MUTATIONS {
     script:
     """
     RESULTS_DIR=${out_path}/results
-    echo ref
-    cat ${reference}
-    echo cons
-    cat ${consensus}
 
     python3 $params.programs.muts --ref_seq ${reference} --consensus_seq ${consensus} --sample_name ${out_path.baseName}_${genotype} --out_csv \$RESULTS_DIR/mutations_${prot}_${genotype}.csv --prot_name ${prot}
+    
     python3 $params.programs.annotator --out_dir \$RESULTS_DIR --annotate ${params.project_data}/metadata/annotate.csv --sample_name ${out_path.baseName}_${genotype} --muts_file \$RESULTS_DIR/mutations_${prot}_${genotype}.csv 
     """
 }

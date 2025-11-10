@@ -19,16 +19,17 @@ process BLASTN {
     if (params.fileType == 'fasta')
         """
         #!/bin/bash
-        blastn -query $seqsFasta -db $params.references.EVdb -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
-        blastn -task dc-megablast -query $seqsFasta -db $params.references.VP1db -out $outputDir/out-blastn2.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
-        if [ -f $outputDir/out-blastn.txt ] && [ -f $outputDir/out-blastn2.txt ]; then
-            cat $outputDir/out-blastn2.txt >> $outputDir/out-blastn.txt
-            blastnout=$outputDir/out-blastn.txt
-        elif [ -f $outputDir/out-blastn.txt ] && [ ! -f $outputDir/out-blastn2.txt ]; then
-            blastnout=$outputDir/out-blastn.txt
-        elif [ ! -f $outputDir/out-blastn.txt ] && [ -f $outputDir/out-blastn2.txt ]; then
-            blastnout=$outputDir/out-blastn2.txt
-        fi
+        #blastn -query $seqsFasta -db $params.references.EVdb -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
+        blastn -task dc-megablast -query $seqsFasta -db $params.references.EVdb -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
+        #if [ -f $outputDir/out-blastn.txt ] && [ -f $outputDir/out-blastn2.txt ]; then
+        #    cat $outputDir/out-blastn2.txt >> $outputDir/out-blastn.txt
+        #    blastnout=$outputDir/out-blastn.txt
+        #elif [ -f $outputDir/out-blastn.txt ] && [ ! -f $outputDir/out-blastn2.txt ]; then
+        #    blastnout=$outputDir/out-blastn.txt
+        #elif [ ! -f $outputDir/out-blastn.txt ] && [ -f $outputDir/out-blastn2.txt ]; then
+        #    blastnout=$outputDir/out-blastn2.txt
+        #fi
+        blastnout=$outputDir/out-blastn.txt
         if [ \$(cat \$blastnout | wc -l) -eq 0 ]; then
             echo "No enterovirus sequences found." >> ${outputDir}/errors.log
             exit 1
