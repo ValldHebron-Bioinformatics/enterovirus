@@ -51,6 +51,9 @@ for _, row in diamonddf.iterrows():
     elif speciesType[row[1].split('_')[1]] == "Enterovirus betacoxsackie": sp = "EV-B_reference-VP1_nucleotide_mutations.fasta"
     elif speciesType[row[1].split('_')[1]] == "Enterovirus coxsackiepol": sp = "EV-C_reference-VP1_nucleotide_mutations.fasta"
     elif speciesType[row[1].split('_')[1]] == "Enterovirus deconjuncti": sp = "EV-D_reference-VP1_nucleotide_mutations.fasta"
+    elif speciesType[row[1].split('_')[1]] == "Enterovirus alpharhino": sp = "RV-A_reference-VP1_nucleotide_mutations.fasta"
+    elif speciesType[row[1].split('_')[1]] == "Enterovirus betarhino": sp = "RV-B_reference-VP1_nucleotide_mutations.fasta"
+    elif speciesType[row[1].split('_')[1]] == "Enterovirus cerhino": sp = "RV-C_reference-VP1_nucleotide_mutations.fasta"
     results.loc[len(results)] = [dirpath, 'VP1', dirpath+"/"+seq_id+".fasta", pwd+"/"+sp, genotype]
 
 # Close output files
@@ -58,4 +61,4 @@ prot_output.close()
 nucl_output.close()
 
 blastndf.to_csv(dirpath+"/species-assignment.csv", index=False)
-results.to_csv(dirpath+"/sample-mutations.csv", index=False)
+results.to_csv(dirpath+"/results/sample-mutations.csv", index=False)

@@ -54,20 +54,30 @@ elif protocol == "partial":
         segment = sequences[seq_id][blastn[4][0]-1:blastn[5][0]]
         if (blastn[4][0] <= blastn[5][0]) and (blastn[6][0] <= blastn[7][0]):
             outfile.write(f">{seq_id}\n{segment}\n")
-            if speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alphacoxsackie": st = 2502
-            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betacoxsackie": st = 2508
-            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus coxsackiepol": st = 2544
-            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus deconjuncti": st = 2418
-            results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[6][0]+st, blastn[7][0]+st, speciesType[blastn[1][0].split('_')[1]], ''] 
+            results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[6][0], blastn[7][0], speciesType[blastn[1][0].split('_')[1]], ''] 
+        # Bloque para cuando se usa como referencia de blastn la VP1. De momento usaremos todo EV, por lo que las posiciones no deben corregirse.
+        #    if speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alphacoxsackie": st = 2502
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betacoxsackie": st = 2508
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus coxsackiepol": st = 2544
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus deconjuncti": st = 2418
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alpharhino": st = 2441
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betarhino": st = 2387
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus cerhino": st = 2469
+        #    results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[6][0]+st, blastn[7][0]+st, speciesType[blastn[1][0].split('_')[1]], ''] 
         else:
             segmentrev=segment.replace("A","t").replace("C","g").replace("G","c").replace("T","a")
             segment=segmentrev[::-1].upper()
             outfile.write(f">{seq_id}\n{segment}\n")
-            if speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alphacoxsackie": st = 2502
-            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betacoxsackie": st = 2508
-            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus coxsackiepol": st = 2544
-            elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus deconjuncti": st = 2418
-            results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[7][0]+st, blastn[6][0]+st, speciesType[blastn[1][0].split('_')[1]], '']
+            results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[7][0], blastn[6][0], speciesType[blastn[1][0].split('_')[1]], '']
+        # Bloque para cuando se usa como referencia de blastn la VP1. De momento usaremos todo EV, por lo que las posiciones no deben corregirse.
+        #    if speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alphacoxsackie": st = 2502
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betacoxsackie": st = 2508
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus coxsackiepol": st = 2544
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus deconjuncti": st = 2418
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus alpharhino": st = 2441
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus betarhino": st = 2387
+        #    elif speciesType[blastn[1][0].split('_')[1]] == "Enterovirus cerhino": st = 2469
+        #    results.loc[len(results)] = [blastn[1][0].split('_')[1], str(blastn[0][0]), blastn[7][0]+st, blastn[6][0]+st, speciesType[blastn[1][0].split('_')[1]], '']
 outfile.close()
 
 results.to_csv(out_dir+"/species-assignment.csv", index=False)

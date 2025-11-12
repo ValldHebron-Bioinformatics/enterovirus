@@ -49,7 +49,7 @@ process BLASTN {
             """
         else if (params.protocol == 'partial')
             """
-            blastn -task dc-megablast -query $seqsFasta -db $params.references.VP1db -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
+            blastn -task dc-megablast -query $seqsFasta -db $params.references.EVdb -out $outputDir/out-blastn.txt -outfmt "6 qacc sacc score evalue qstart qend sstart send"
             if [ -f $outputDir/out-blastn.txt ]; then
                 blastnout=$outputDir/out-blastn.txt
             fi
