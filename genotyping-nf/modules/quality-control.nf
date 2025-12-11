@@ -32,7 +32,7 @@ process CREATEDIR {
             echo "File $file1 is in FASTQ format, but the input file type is set to FASTA."
             exit 1
         fi
-    elif [[ $file1 == *.fasta ]]; then
+    elif [[ $file1 == *.fasta || $file1 == *.fas || $file1 == *.fa ]]; then
         extension="fasta"
         if [[ $params.fileType == "fastq" ]]; then
             echo "File $file1 is in FASTA format, but the input file type is set to FASTQ."
