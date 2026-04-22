@@ -1,58 +1,123 @@
 {
-  "title": "Genomic epidemiology of EV-D68 VP1",
-  "maintainers": [
-    {
-      "name": "Respiratory Virus Unit from Vall d'Hebron University Hospital",
-      "url": "https://www.vallhebron.com/"
-    }
-  ],
+  "title": "Phylodynamics of Enterovirus D68 - VP1",
   "colorings": [
     {
-      "key": "gt",
-      "title": "Subgenotype",
-      "type": "categorical"
-    }, 
-    {
-      "key": "num_date",
-      "title": "Date",
-      "type": "continuous"
+      "title": "Host Age (years)",
+      "type": "continuous",
+      "key": "age"
     },
     {
-      "key": "country",
+      "title": "Age range 1",
+      "type": "categorical",
+      "key": "age_range1"
+    },
+    {
+      "title": "Age range 2",
+      "type": "categorical",
+      "key": "age_range2"
+    },
+    {
+      "title": "Age range 3",
+      "type": "categorical",
+      "key": "age_range3"
+    },
+    {
+      "title": "Sampling date",
+      "type": "continuous",
+      "key": "num_date"
+    },
+    {
       "title": "Country",
-      "type": "categorical"
+      "type": "categorical",
+      "key": "country"
     },
     {
-      "key": "clade_membership",
+      "title": "Region",
+      "type": "categorical",
+      "key": "region"
+    },
+    {
+      "type": "categorical",
+      "title": "Collaborators",
+      "key": "collab_country"
+    },
+    {
+      "title": "Date Added",
+      "type": "categorical",
+      "key": "date_added"
+    },
+    {
+      "title": "Gender",
+      "type": "categorical",
+      "key": "sex"
+    },
+    {
+      "title": "Gap/N-free Sequence Len",
+      "type": "continuous",
+      "key": "seq-len"
+    },
+    {
       "title": "Clade",
-      "type": "categorical"
+      "type": "categorical",
+      "key": "clade_membership"
+    },
+    {
+      "title": "Symptom",
+      "type": "categorical",
+      "key": "symptom"
+    },
+    {
+      "title": "Epitope at BC loop (Pos 90,92,95,97,98,103)",
+      "type": "categorical",
+      "key": "BC"
+    },
+    {
+      "title": "Epitope at DE loop (Pos 140,141,142,143,144,145,146,149)",
+      "type": "categorical",
+      "key": "DE"
+    },
+    {
+      "title": "Epitope at C terminus",
+      "type": "categorical",
+      "key": "CTERM"
+    },
+    {
+      "title": "Focal Country",
+      "type": "categorical",
+      "key": "focal_country"
     }
   ],
   "geo_resolutions": [
+    "country", "region"
+  ],
+  "maintainers": [
+    {"name": "Emma Hodcroft", "url": "http://emmahodcroft.com/"},
+    {"name": "Margarida Pires Simoes", "url": "https://www.cienciavitae.pt/portal/511C-89AD-16E8"},
+    {"name": "Kim Benschop", "url": "https://organovir.com/kim-benschop/"}
+  ],
+  "build_url": "https://github.com/nextstrain/enterovirus_d68", 
+  "data_provenance": [
     {
-      "key": "country",
-      "title": "Country"
-    },
-    {
-      "key": "city",
-      "title": "City"
+      "name": "GenBank",
+      "url": "https://www.ncbi.nlm.nih.gov/genbank/"
     }
   ],
-  "panels": [
-    "tree",
-    "map"
+  "filters": [
+    "country",
+    "region",
+    "clade_membership",
+    "age_range1",
+    "symptom",
+    "collab_country",
+    "date_added"
   ],
   "display_defaults": {
-    "color_by": "country",
-    "geo_resolution": "country",
-    "distance_measure": "num_date",
-    "tip_label": "strain",
-    "map_triplicate": true
+    "color_by": "clade"
   },
-  "metadata_columns": [
-    "strain"
-  ],
-  "filters": [
-    "country"
+  "panels": [
+    "tree",
+    "map",
+    "entropy",
+    "frequencies"
   ]
 }

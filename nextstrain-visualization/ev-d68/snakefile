@@ -1,5 +1,44 @@
+import os
+
+CONFIG_DIR = os.path.join(workflow.basedir, "config")
+VP1_CONFIG_FILES = [
+    #"config/auspice_config.json",
+    "config/clades.tsv",
+    "config/colors.tsv",
+    "config/geo_regions.tsv",
+    "config/lat_longs.tsv",
+    "config/dropped_strains.txt",
+    "config/ev_d68_reference_vp1.fasta",
+    "config/ev_d68_reference_vp1.gb",
+    "config/kept_strains.txt",
+    "config/kept_strains_300.txt",
+]
+
+
+rule fetch_vp1_config:
+    message:
+        "Downloading VP1 config files from nextstrain/enterovirus_d68"
+    output:
+        VP1_CONFIG_FILES
+    shell:
+        """
+        tmpdir=$(mktemp -d)
+        git clone --depth 1 --filter=blob:none --sparse https://github.com/nextstrain/enterovirus_d68.git "$tmpdir/repo"
+        cd "$tmpdir/repo"
+        git sparse-checkout set vp1/config config
+        rm -rf "{CONFIG_DIR}"
+        mkdir -p "{CONFIG_DIR}"
+        cp -a config/geo_regions.tsv "{CONFIG_DIR}/"
+        cp -a config/lat_longs.tsv "{CONFIG_DIR}/"
+        cp -a vp1/config/. "{CONFIG_DIR}/"
+        rm -rf "$tmpdir"
+        """
+
+
 rule all:
+    default_target: True
     input:
+        fetch_vp1_config = rules.fetch_vp1_config.output,
         auspice = "auspice/ev-d68.json"
 
 rule files:
@@ -7,7 +46,7 @@ rule files:
         colors =            "config/colors.tsv",
         regions=            "config/geo_regions.tsv",
         lat_longs =         "config/lat_longs.tsv",
-        reference =         "config/reference_sequence.gb", ## TO DO: Provide reference genome
+        reference =         "config/ev_d68_reference_vp1.gb", ## TO DO: Provide reference genome
         auspice_config =    "config/auspice_config.json",
         input_fasta =       "data/sequences.fasta",
         input_metadata =    "data/metadata.tsv",
@@ -67,7 +106,7 @@ rule reference_gb_to_fasta:
         reference = rules.files.input.reference
 
     output:
-        reference = "results/reference_sequence.fasta"
+        reference = "results/ev_d68_reference_vp1.fasta"
     run:
         from Bio import SeqIO 
         SeqIO.convert(input.reference, "genbank", output.reference, "fasta")
