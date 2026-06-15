@@ -2,6 +2,37 @@ rule all:
     input:
         auspice = "auspice/ev-d68.json"
 
+rule merge_sequences:
+    message: "Merging reference and database sequences into a single FASTA file"
+    input:
+        refs   = "data/sequences_refs.fasta",
+        db     = "data/sequences_db.fasta"
+    output:
+        sequences = "results/sequences.fasta"
+    shell:
+        "cat {input.refs} {input.db} > {output.sequences}"
+
+rule merge_metadata:
+    message: "Merging reference and database metadata, aligning columns by header name"
+    input:
+        metadata_refs = "data/metadata_refs.tsv",
+        metadata_db   = "data/metadata_db.tsv"
+    output:
+        metadata = "results/metadata.tsv"
+    run:
+        import pandas as pd
+
+        refs = pd.read_csv(input.metadata_refs, sep="\t", dtype=str)
+        db   = pd.read_csv(input.metadata_db,   sep="\t", dtype=str)
+
+        db = db.rename(columns={
+            "sampleID": "strain",
+            "host":     "Host",
+        })
+
+        merged = pd.concat([refs, db], ignore_index=True)
+        merged.to_csv(output.metadata, sep="\t", index=False)
+
 rule files:
     input:
         colors =            "config/colors.tsv",
@@ -9,13 +40,11 @@ rule files:
         lat_longs =         "config/lat_longs.tsv",
         reference =         "config/reference_sequence.gb", ## TO DO: Provide reference genome
         auspice_config =    "config/auspice_config.json",
-        input_fasta =       "data/sequences.fasta",
-        input_metadata =    "data/metadata.tsv",
+        input_fasta =       rules.merge_sequences.output.sequences,
+        input_metadata =    rules.merge_metadata.output.metadata,
         clades =            "config/clades.tsv" ## TO DO: Define clade
     params:
-        sequence_length =   850, ## TO DO: Change length 
-
-## files = rules.files.input
+        sequence_length =   850, ## TO DO: Change length
 
 rule index_sequences:
     message: 
